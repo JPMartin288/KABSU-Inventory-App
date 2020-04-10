@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="InsertData.cs" />
     <Compile Include="DataLoad.cs" />
+    <Compile Include="LibExt.Rive.cs" />
     <Compile Include="Morph.cs" />
     <Compile Include="NoteWindow.xaml.cs">
       <DependentUpon>NoteWindow.xaml</DependentUpon>

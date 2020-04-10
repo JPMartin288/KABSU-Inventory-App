@@ -150,8 +150,14 @@ C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.as
 C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.core.xml
 C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.execution.desktop.xml
 C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\KABSUApp.csproj.CopyComplete
-C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.abstractions.xml
 C:\Users\Jacob\Source\Repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\NoteWindow.g.cs
 C:\Users\Jacob\Source\Repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\NoteWindow.baml
 C:\Users\Jacob\Source\Repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\AdditionalInfoWindow.g.cs
 C:\Users\Jacob\Source\Repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\AdditionalInfoWindow.baml
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\AdditionalInfoWindow.g.cs
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\NoteWindow.g.cs
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.runner.visualstudio.testadapter.dll
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.runner.reporters.net452.dll
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\bin\Debug\xunit.runner.utility.net452.dll
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\AdditionalInfoWindow.baml
+C:\Users\e10d1\source\repos\KABSU-Inventory-App\WpfApp\WpfApp\obj\Debug\NoteWindow.baml
