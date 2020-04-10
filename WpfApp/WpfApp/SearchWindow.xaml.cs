@@ -43,7 +43,7 @@ namespace WpfApp
         // Upon clicking "Search," opens a search results window and closes this window
         private void UxSearch_Click(object sender, RoutedEventArgs e)
         {
-            windowResults = new SearchWindowResults(CalculateResultList());
+            windowResults = new SearchWindowResults(CalculateResultList(), searchTerm);
             windowResults.ShowDialog();
             this.Close();
         }

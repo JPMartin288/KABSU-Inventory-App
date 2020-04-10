@@ -20,8 +20,11 @@ namespace WpfApp
     public partial class SearchWindowResults : Window
     {
         private RecordWindow recordWindow;
-        public SearchWindowResults(List<SearchResult> results)
+        private SearchResults searchResults;
+        private SearchTerm searchTerm;
+        public SearchWindowResults(List<SearchResult> results, SearchTerm searchTerm)
         {
+            this.searchTerm = searchTerm;
             InitializeComponent();
             uxSearchResults.ItemsSource = results;
             ValidColumn.Width = 40;
@@ -45,5 +48,23 @@ namespace WpfApp
             recordWindow.ShowDialog();
         }
 
+        private void UxRefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            searchResults = new SearchResults();
+            List<SearchResult> results = searchResults.retrieveData(searchTerm);
+            InitializeComponent();
+            uxSearchResults.ItemsSource = results;
+            ValidColumn.Width = 40;
+            CanNumColumn.Width = 50;
+            CodeColumn.Width = 110;
+            CollDateColumn.Width = 90;
+            UnitsColumn.Width = 40;
+            AnimalNameColumn.Width = 225;
+            BreedColumn.Width = 80;
+            RegNumColumn.Width = 80;
+            OwnerColumn.Width = 100;
+            TownColumn.Width = 100;
+            StateColumn.Width = 42;
+        }
     }
 }
