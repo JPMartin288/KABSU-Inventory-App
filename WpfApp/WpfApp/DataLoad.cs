@@ -16,7 +16,7 @@ namespace WpfApp
         /// <summary>
         /// Primary method to be called
         /// </summary>
-        public static void DatabaseLoad()
+        /*public static void DatabaseLoad()
         {
             using (StreamReader sr = new StreamReader("C:/Users/e10d1/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/People.csv"))
             {
@@ -92,6 +92,6 @@ namespace WpfApp
                     errorList.Append(InsertData.InsertSample(lineTokens[0], lineTokens[1], lineTokens[2], lineTokens[3], Convert.ToInt32(lineTokens[4]), lineTokens[6], lineTokens[9], lineTokens[10], lineTokens[11]));
                 }
             }
-        }
+        }*/
     }
 }
