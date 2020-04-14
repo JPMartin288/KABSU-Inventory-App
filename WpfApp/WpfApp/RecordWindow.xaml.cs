@@ -168,9 +168,18 @@ namespace WpfApp
 
                                 command.Parameters.AddWithValue("@ToFrom", r.ToFrom);
                                 command.Parameters.AddWithValue("@Date", r.Date);
-                                command.Parameters.AddWithValue("@Received", Convert.ToInt32(r.Rec));
-                                command.Parameters.AddWithValue("@Shipped", Convert.ToInt32(r.Ship));
-                                command.Parameters.AddWithValue("@Balance", Convert.ToInt32(r.Balance));
+                                if (r.Rec != "")
+                                    command.Parameters.AddWithValue("@Received", Convert.ToInt32(r.Rec));
+                                else
+                                    command.Parameters.AddWithValue("@Received", 0);
+                                if (r.Ship != "")
+                                    command.Parameters.AddWithValue("@Shipped", Convert.ToInt32(r.Ship));
+                                else
+                                    command.Parameters.AddWithValue("@Shipped", 0);
+                                if (r.Balance != "")
+                                    command.Parameters.AddWithValue("@Balance", Convert.ToInt32(r.Balance));
+                                else
+                                    command.Parameters.AddWithValue("@Balance", 0);
                                 command.Parameters.AddWithValue("@AnimalID", r.AnimalId);
 
                                 connection.Open();
