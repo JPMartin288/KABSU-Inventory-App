@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp
 {
-    class Record
+    public class Record
     {
         private string toFrom;
         public string ToFrom

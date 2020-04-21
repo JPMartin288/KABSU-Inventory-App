@@ -32,6 +32,7 @@ namespace WpfApp
         private static int ID_INDEX = 321;
         private static int ROW_SPACING = 32;
         private static int MORPH_ID = 326;
+        private static string CONNECTION_STRING = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
         private List<Record> recordList;
         private Morph morph;
         private bool isMorph;
@@ -71,8 +72,8 @@ namespace WpfApp
             isOldMorph = false;
             populating = false;
             Closing += RecordWindow_Closing;
-            recordList = RetrieveRecords(searchResult.Code);
-            morph = RetrieveMorph(searchResult.Code);
+            recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING);
+            morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING);
         }
 
         private void RecordWindow_Closing(object sender, CancelEventArgs e)
@@ -80,8 +81,14 @@ namespace WpfApp
             CollectAdditionalInfo();
 
             this.IsEnabled = false;
-
-            StoreParent();
+            try
+            {
+                StoreParent(CONNECTION_STRING);
+            }
+            catch (InvalidOperationException)
+            {
+                ShowErrorMessage();
+            }
             List<string> list = new List<string>();
             List<string> morphList = new List<string>();
             int textCount = 0;
@@ -119,10 +126,30 @@ namespace WpfApp
             {
                 morph = new Morph(notes, list[MORPH_ID], list[MORPH_ID + 1], list[MORPH_ID + 2], list[MORPH_ID + 3], list[MORPH_ID + 4], list[MORPH_ID + 5], list[ID_INDEX]);
             }
-            StoreRecords();
-            StoreMorph();
+            try
+            {
+                StoreRecords(CONNECTION_STRING);
+            }
+            catch (InvalidOperationException)
+            {
+                ShowErrorMessage();
+            }
+            try
+            {
+                StoreMorph(CONNECTION_STRING);
+            }
+            catch (InvalidOperationException)
+            {
+                ShowErrorMessage();
+            }
         }
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+
+        private void ShowErrorMessage()
+        {
+            MessageBox.Show("Unable to connect to database.");
+        }
+
+        public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
             if (depObj != null)
             {
@@ -141,11 +168,10 @@ namespace WpfApp
                 }
             }
         }
-        private void StoreRecords()
+        private void StoreRecords(string connectionString)
         {
             if (recordList != null)
             {
-                string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
                 try
                 {
                     using (var connection = new MySqlConnection(connectionString))
@@ -190,17 +216,16 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Unable to connect to database.");
+                    throw new InvalidOperationException();
                 }
             }
         }
-        private void StoreMorph()
+        public void StoreMorph(string connectionString)
         {
             if (isMorph == true && isOldMorph == false)
             {
-                string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
                 try
                 {
                     using (var connection = new MySqlConnection(connectionString))
@@ -225,18 +250,17 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Unable to connect to database.");
+                    throw new InvalidOperationException();
                 }
             }
         }
 
-        private void StoreParent()
+        public void StoreParent(string connectionString)
         {
             if (newRecord == true)
             {
-                string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
                 try
                 {
                     using (var connection = new MySqlConnection(connectionString))
@@ -266,14 +290,13 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Unable to connect to database.");
+                    throw new InvalidOperationException();
                 }
             }
             else
             {
-                string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
                 try
                 {
                     using (var connection = new MySqlConnection(connectionString))
@@ -307,16 +330,15 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Unable to connect to database.");
+                    throw new InvalidOperationException();
                 }
             }
         }
 
-        private List<Record> RetrieveRecords(string id)
+        public List<Record> RetrieveRecords(string id, string connectionString)
         {
-            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
@@ -346,16 +368,14 @@ namespace WpfApp
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Unable to connect to database.");
-                return new List<Record>();
+                throw new InvalidOperationException();
             }
         }
 
-        private Morph RetrieveMorph(string id)
+        public Morph RetrieveMorph(string id, string connectionString)
         {
-            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
@@ -388,10 +408,9 @@ namespace WpfApp
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Unable to connect to database.");
-                return new Morph();
+                throw new InvalidOperationException();
             }
         }
 

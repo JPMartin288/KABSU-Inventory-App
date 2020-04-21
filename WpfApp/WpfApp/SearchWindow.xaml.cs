@@ -19,13 +19,13 @@ namespace WpfApp
     /// </summary>
     public partial class SearchWindow : Window
     {
-        private string owner = "*";
-        private string breed = "*";
-        private string animalName = "*";
-        private string code = "*";
-        private string canNum = "*";
-        private string town = "*";
-        private string state = "*";
+        public string owner = "*";
+        public string breed = "*";
+        public string animalName = "*";
+        public string code = "*";
+        public string canNum = "*";
+        public string town = "*";
+        public string state = "*";
         private SearchResults searchResults;
         private SearchTerm searchTerm;
         SearchWindowResults windowResults;
@@ -34,11 +34,6 @@ namespace WpfApp
             InitializeComponent();
         }
          
-        
-        private void UxSearchTerm1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         // Upon clicking "Search," opens a search results window and closes this window
         private void UxSearch_Click(object sender, RoutedEventArgs e)
@@ -48,7 +43,7 @@ namespace WpfApp
             this.Close();
         }
 
-        private void UxUnitSum_Click(object sender, RoutedEventArgs e)
+        public void UxUnitSum_Click(object sender, RoutedEventArgs e)
         {
             List<SearchResult> results = CalculateResultList();
             int unitSum = 0;
@@ -59,7 +54,7 @@ namespace WpfApp
             MessageBox.Show("Sum of Units: " + unitSum);
         }
 
-        void SetTerm(string term, string contents)
+        public void SetTerm(string term, string contents)
         {
             switch (term)
             {
