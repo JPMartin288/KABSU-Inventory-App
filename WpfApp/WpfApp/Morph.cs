@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp
 {
-    class Morph
+    public class Morph
     {
         private string notes;
         public string Notes
