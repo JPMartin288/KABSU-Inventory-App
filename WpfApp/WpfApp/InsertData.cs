@@ -29,7 +29,7 @@ namespace WpfApp
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
-                    using (var insertCommand = new MySqlCommand("kabsu.InsertPerson", connection))
+                    using (var insertCommand = new MySqlCommand("kabsu.InsertPeople", connection))
                     {
                         insertCommand.CommandType = CommandType.StoredProcedure;
 
