@@ -21,6 +21,7 @@ namespace WpfApp
         /// <returns>A list containing the results of the search</returns>
         public List<SearchResult> retrieveData(SearchTerm st)
         {
+            DataLoad.DatabaseLoad();
             string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {

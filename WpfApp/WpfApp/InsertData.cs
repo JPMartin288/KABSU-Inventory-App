@@ -24,7 +24,7 @@ namespace WpfApp
         /// <returns>If unable to insert person into database, returns the error message. Otherwise, returns an empty string.</returns>
         public static string InsertPerson(int personID, string name, string city, string state, string country)
         {
-            string connectionString = "Server=localhost;Database=kabsu; User ID = appuser; Password = test; Integrated Security=true";
+            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
