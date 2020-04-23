@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `StoreMorph`(
+CREATE PROCEDURE `StoreMorph`(
 IN Notes VARCHAR(256),
 IN Date VARCHAR(32),
 IN Vigor INT,

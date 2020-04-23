@@ -18,7 +18,7 @@ namespace WpfApp
         /// </summary>
         public static void DatabaseLoad()
         {
-            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/People.csv")) //change this file path to match where it is on your machine
+            using (StreamReader sr = new StreamReader("C:/Users/Jacob/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/People.csv")) //change this file path to match where it is on your machine
             {
                 string line;
                 string[] lineTokens;
@@ -44,7 +44,7 @@ namespace WpfApp
                 }
             }
 
-            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/Animal.csv"))
+            using (StreamReader sr = new StreamReader("C:/Users/Jacob/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/Animal.csv"))
             {
                 string line;
                 string[] lineTokens;
@@ -68,7 +68,7 @@ namespace WpfApp
                 }
             }
 
-            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/sample.csv"))
+            using (StreamReader sr = new StreamReader("C:/Users/Jacob/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/sample.csv"))
             {
                 string line;
                 string[] lineTokens;

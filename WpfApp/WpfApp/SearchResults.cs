@@ -21,7 +21,8 @@ namespace WpfApp
         /// <returns>A list containing the results of the search</returns>
         public List<SearchResult> retrieveData(SearchTerm st)
         {
-            DataLoad.DatabaseLoad();
+            //Uncomment Line below to use one-time database excel file insertion. Triggers on search, takes A LONG TIME, close and re-comment directly after search.
+            //DataLoad.DatabaseLoad();
             string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {

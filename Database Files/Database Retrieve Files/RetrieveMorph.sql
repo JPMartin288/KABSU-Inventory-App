@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RetrieveMorph`(
+CREATE PROCEDURE `RetrieveMorph`(
 IN AnimalID VARCHAR(32))
 BEGIN
 SELECT D.Notes, D.Date, D.Vigor, D.Mot, D.Morph, D.Code, D.Units

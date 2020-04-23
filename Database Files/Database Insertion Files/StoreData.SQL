@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `StoreData`(
+CREATE PROCEDURE `StoreData`(
 IN ToFrom VARCHAR(100),
 IN Date VARCHAR(32),
 IN Received INT,
