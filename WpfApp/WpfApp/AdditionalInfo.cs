@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace WpfApp
 {
+    /// <summary>
+    /// Object containing any additional info a sample needs in order to be stored/searched.
+    /// </summary>
     public class AdditionalInfo
     {
         private string species;
+        /// <summary>
+        /// Public accessor to the Species variable
+        /// </summary>
         public string Species
         {
             get
@@ -21,6 +27,9 @@ namespace WpfApp
             }
         }
         private string city;
+        /// <summary>
+        /// Public accessor to the City variable
+        /// </summary>
         public string City
         {
             get
@@ -33,6 +42,9 @@ namespace WpfApp
             }
         }
         private string state;
+        /// <summary>
+        /// Public accessor to the State variable
+        /// </summary>
         public string State
         {
             get
@@ -45,6 +57,9 @@ namespace WpfApp
             }
         }
         private string country;
+        /// <summary>
+        /// Public accessor to the Country variable
+        /// </summary>
         public string Country
         {
             get
@@ -57,6 +72,9 @@ namespace WpfApp
             }
         }
         private bool valid;
+        /// <summary>
+        /// Public accessor to the Valid/Invalid variable
+        /// </summary>
         public bool Valid
         {
             get
@@ -68,6 +86,14 @@ namespace WpfApp
                 this.valid = value;
             }
         }
+        /// <summary>
+        /// Constructor for the Additional Info Object, which takes in any necessary fields.
+        /// </summary>
+        /// <param name="species">The species of the animal</param>
+        /// <param name="city">The city of the owner</param>
+        /// <param name="state">The state of the owner</param>
+        /// <param name="country">The country of the owner</param>
+        /// <param name="valid">Whether the sample is valid or not</param>
         public AdditionalInfo(string species, string city, string state, string country, bool valid)
         {
             this.species = species;

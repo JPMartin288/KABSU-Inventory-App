@@ -23,23 +23,31 @@ namespace WpfApp
     public partial class RecordWindow : Window
     {
         SearchResult searchResult;
-        private string notes;
-        private string oldCode;
+        private string notes; //classwide string containing misc. notes
+
+        //Old variables in case variables used to identify the record card in the database were changed
+        private string oldCode; 
         private string oldOwner;
         private string oldCity;
         private string oldState;
+
         private AdditionalInfo info;
-        private static int ID_INDEX = 321;
-        private static int ROW_SPACING = 32;
-        private static int MORPH_ID = 326;
-        private static string CONNECTION_STRING = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
+        private static int ID_INDEX = 321; //the index of the animal ID
+        private static int ROW_SPACING = 32; //the spacing between text boxes in the same record row
+        private static int MORPH_ID = 326; //the index of the morphology ID
+        private static string CONNECTION_STRING = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true"; //The connection string of the current database location
         private List<Record> recordList;
         private Morph morph;
-        private bool isMorph;
-        private bool isOldMorph;
-        private bool newRecord;
+        private bool isMorph; //boolean determing if the text box containg morphology info
+        private bool isOldMorph; //boolean determining if the morphology info is unchanged
+        private bool newRecord; //boolean determining if the record is freshly created
         private NoteWindow noteWindow;
         private AdditionalInfoWindow infoWindow;
+
+        /// <summary>
+        /// Default constructor for Record Window, opens an empty record card
+        /// and initializes empty notes and search result.
+        /// </summary>
         public RecordWindow()
         {
             newRecord = true;
@@ -49,6 +57,10 @@ namespace WpfApp
             Closing += RecordWindow_Closing;
         }
 
+        /// <summary>
+        /// Constructor for an existing record card window. Populates the necessary sections of the card with existing information.
+        /// </summary>
+        /// <param name="search">Search Result object containing basic information to populate with.</param>
         public RecordWindow(SearchResult search)
         {
             newRecord = false;
@@ -57,24 +69,34 @@ namespace WpfApp
             oldOwner = searchResult.Owner;
             oldCity = searchResult.Town;
             oldState = searchResult.State;
+
             InitializeComponent();
+
             uxCode.Text = searchResult.Code;
             uxBreed.Text = searchResult.Breed;
             uxAnimalName.Text = searchResult.AnimalName;
             uxRegNum.Text = searchResult.RegNum;
             uxOwner.Text = searchResult.Owner;
             uxCanNum.Text = searchResult.CanNum;
+
             notes = "";
             isMorph = false;
             isOldMorph = false;
+
             Closing += RecordWindow_Closing;
-            recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING);
-            morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING);
+
+            recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing specific record entries
+            morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing morphology info
         }
 
+        /// <summary>
+        /// Event handler on closing the window. Prompts the user for additional info, then store the information into the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RecordWindow_Closing(object sender, CancelEventArgs e)
         {
-            CollectAdditionalInfo();
+            CollectAdditionalInfo(); //Opens the additional info window
 
             this.IsEnabled = false;
             try
@@ -92,20 +114,22 @@ namespace WpfApp
             foreach(TextBox tb in FindVisualChildren<TextBox>(this))
             {
                 list.Add(tb.Text);
-                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxMorphGrid))
+                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxMorphGrid)) //if the text added belongs to record rows
                 {
                     textCount++;
                     recordCount++;
                 }
-                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxTopGrid1 && tb.Parent != uxTopGrid2))
+                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxTopGrid1 && tb.Parent != uxTopGrid2)) //if any morphology data is found
                     isMorph = true;
             }
             recordList = new List<Record>();
-            for (int i = 0; textCount > 0; i++)
+            for (int i = 0; textCount > 0; i++) //while there  is record text to be combined into record rows
             {
                 if (list[i] != "" || list[i + ROW_SPACING] != "" || list[i + (ROW_SPACING * 2)] != "" || list[i + (ROW_SPACING * 3)] != "" || list[i + (ROW_SPACING * 4)] != "")
                 {
                     recordList.Add(new Record(list[i], list[i + ROW_SPACING], list[i + (ROW_SPACING * 2)], list[i + (ROW_SPACING * 3)], list[i + (ROW_SPACING * 4)], list[ID_INDEX]));
+                    
+                    //Decrement text counter
                     if (list[i] != "")
                         textCount--;
                     if (list[i + ROW_SPACING] != "")
@@ -118,14 +142,15 @@ namespace WpfApp
                         textCount--;
                 }
             }
-            if (isMorph)
+            if (isMorph) //if morphology info exists
             {
+                //create new morphology object
                 morph = new Morph(notes, list[MORPH_ID], list[MORPH_ID + 1], list[MORPH_ID + 2], list[MORPH_ID + 3], list[MORPH_ID + 4], list[MORPH_ID + 5], list[ID_INDEX]);
             }
             try
             {
-                StoreRecords(CONNECTION_STRING);
-                StoreMorph(CONNECTION_STRING);
+                StoreRecords(CONNECTION_STRING); //store the record list into the database
+                StoreMorph(CONNECTION_STRING); //store the morphology info into the database
             }
             catch (InvalidOperationException)
             {
@@ -133,11 +158,20 @@ namespace WpfApp
             }
         }
 
+        /// <summary>
+        /// Displays a message box with an error message.
+        /// </summary>
         private void ShowErrorMessage()
         {
             MessageBox.Show("Unable to connect to database.");
         }
 
+        /// <summary>
+        /// Takes a WPF parent object and returns all child objects contained within it as an Enumerable
+        /// </summary>
+        /// <typeparam name="T">the object type</typeparam>
+        /// <param name="depObj">the parent object</param>
+        /// <returns>the object's children</returns>
         public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
             if (depObj != null)
@@ -157,6 +191,10 @@ namespace WpfApp
                 }
             }
         }
+        /// <summary>
+        /// Method which inserts a list of Record objects into the database after deleting existing records
+        /// </summary>
+        /// <param name="connectionString">The connection string of the current database location</param>
         private void StoreRecords(string connectionString)
         {
             if (recordList != null)
@@ -165,22 +203,25 @@ namespace WpfApp
                 {
                     using (var connection = new MySqlConnection(connectionString))
                     {
-                        using (var command = new MySqlCommand("kabsu.DeleteData", connection))
+                        using (var command = new MySqlCommand("kabsu.DeleteData", connection)) //Initializes command to the DeleteData stored procedure
                         {
                             command.CommandType = CommandType.StoredProcedure;
 
+                            //Add the animal ID as an input for the procedure.
                             command.Parameters.AddWithValue("@ID", searchResult.Code);
+
                             connection.Open();
-                            int k = command.ExecuteNonQuery();
+                            int k = command.ExecuteNonQuery(); //Executes the procedure
                             connection.Close();
                         }
                         foreach (Record r in recordList)
                         {
 
-                            using (var command = new MySqlCommand("kabsu.StoreData", connection))
+                            using (var command = new MySqlCommand("kabsu.StoreData", connection)) //Initializes command to the StoreData stored procedure
                             {
                                 command.CommandType = CommandType.StoredProcedure;
 
+                                //Add variables from the record object as inputs for the procedure.
                                 command.Parameters.AddWithValue("@ToFrom", r.ToFrom);
                                 command.Parameters.AddWithValue("@Date", r.Date);
                                 if (r.Rec != "")
@@ -198,19 +239,24 @@ namespace WpfApp
                                 command.Parameters.AddWithValue("@AnimalID", r.AnimalId);
 
                                 connection.Open();
-                                int k = command.ExecuteNonQuery();
+                                int k = command.ExecuteNonQuery(); //Executes the procedure
                                 connection.Close();
                             }
                         }
 
                     }
                 }
-                catch (Exception)
+                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
                 {
                     throw new InvalidOperationException();
                 }
             }
         }
+
+        /// <summary>
+        /// Method which inserts a list of Record objects into the database after deleting existing records
+        /// </summary>
+        /// <param name="connectionString">The connection string of the current database location</param>
         public void StoreMorph(string connectionString)
         {
             if (isMorph == true && isOldMorph == false)
@@ -219,10 +265,11 @@ namespace WpfApp
                 {
                     using (var connection = new MySqlConnection(connectionString))
                     {
-                        using (var command = new MySqlCommand("kabsu.StoreMorph", connection))
+                        using (var command = new MySqlCommand("kabsu.StoreMorph", connection)) //Initializes command to the StoreMorph stored procedure
                         {
                             command.CommandType = CommandType.StoredProcedure;
 
+                            //Add variables from the record object as inputs for the procedure.
                             command.Parameters.AddWithValue("@Notes", morph.Notes);
                             command.Parameters.AddWithValue("@Date", uxMorphDate.Text);
                             command.Parameters.AddWithValue("@Vigor", Convert.ToInt32(morph.Vigor));
@@ -233,31 +280,36 @@ namespace WpfApp
                             command.Parameters.AddWithValue("@ID", morph.Id);
 
                             connection.Open();
-                            int k = command.ExecuteNonQuery();
+                            int k = command.ExecuteNonQuery(); //Executes the procedure
                             connection.Close();
                         }
 
                     }
                 }
-                catch (Exception)
+                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
                 {
                     throw new InvalidOperationException();
                 }
             }
         }
 
+        /// <summary>
+        /// Stores the sample and its child animal/person into the database
+        /// </summary>
+        /// <param name="connectionString">The connection string of the current database location</param>
         public void StoreParent(string connectionString)
         {
-            if (newRecord == true)
+            if (newRecord == true) //If the record is freshly created
             {
                 try
                 {
                     using (var connection = new MySqlConnection(connectionString))
                     {
-                        using (var command = new MySqlCommand("kabsu.StoreParent", connection))
+                        using (var command = new MySqlCommand("kabsu.StoreParent", connection)) //Initializes command to the StoreParent stored procedure
                         {
                             command.CommandType = CommandType.StoredProcedure;
 
+                            //Add variables from the record card as inputs for the procedure.
                             command.Parameters.AddWithValue("@Valid", info.Valid.ToString().ToUpper());
                             command.Parameters.AddWithValue("@CanNum", uxCanNum.Text);
                             command.Parameters.AddWithValue("@AnimalID", uxCode.Text);
@@ -273,13 +325,13 @@ namespace WpfApp
                             command.Parameters.AddWithValue("@RegNum", uxRegNum.Text);
 
                             connection.Open();
-                            int k = command.ExecuteNonQuery();
+                            int k = command.ExecuteNonQuery(); //Executes the procedure
                             connection.Close();
                         }
 
                     }
                 }
-                catch (Exception)
+                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
                 {
                     throw new InvalidOperationException();
                 }
@@ -290,10 +342,11 @@ namespace WpfApp
                 {
                     using (var connection = new MySqlConnection(connectionString))
                     {
-                        using (var command = new MySqlCommand("kabsu.UpdateParent", connection))
+                        using (var command = new MySqlCommand("kabsu.UpdateParent", connection)) //Initializes command to the UpdateParent stored procedure
                         {
                             command.CommandType = CommandType.StoredProcedure;
 
+                            //Add variables from the record card as inputs for the procedure.
                             command.Parameters.AddWithValue("@SValid", info.Valid.ToString().ToUpper());
                             command.Parameters.AddWithValue("@SCanNum", uxCanNum.Text);
                             command.Parameters.AddWithValue("@OldAnimalID", oldCode);
@@ -313,74 +366,90 @@ namespace WpfApp
                             command.Parameters.AddWithValue("@ARegNum", uxRegNum.Text);
 
                             connection.Open();
-                            int k = command.ExecuteNonQuery();
+                            int k = command.ExecuteNonQuery(); //Executes the procedure
                             connection.Close();
                         }
 
                     }
                 }
-                catch (Exception)
+                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
                 {
                     throw new InvalidOperationException();
                 }
             }
         }
 
+        /// <summary>
+        /// Retrieves records from the database matching the animal's unique ID
+        /// </summary>
+        /// <param name="id">the animal ID</param>
+        /// <param name="connectionString">The connection string of the current database location</param>
+        /// <returns>A list of Record Objects</returns>
         public List<Record> RetrieveRecords(string id, string connectionString)
         {
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
-                    using (var command = new MySqlCommand("kabsu.RetrieveRecords", connection))
+                    using (var command = new MySqlCommand("kabsu.RetrieveRecords", connection)) //Initializes command to the RetrieveRecords stored procedure
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
+                        //Add the ID as an input for the procedure.
                         command.Parameters.AddWithValue("@AnimalID", id);
                         connection.Open();
 
-                        var reader = command.ExecuteReader();
+                        var reader = command.ExecuteReader(); //Executes a procedure with a reader returning existing record rows
 
                         recordList = new List<Record>();
                         Record record;
-                        while (reader.Read())
+                        while (reader.Read()) //While there are still rows to return
                         {
-                            record = new Record(
+                            record = new Record( //Create a record of the current row
                                reader.GetString(reader.GetOrdinal("ToFrom")),
                                reader.GetString(reader.GetOrdinal("Date")),
                                reader.GetInt32(reader.GetOrdinal("NumReceived")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("NumShipped")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("Balance")).ToString(), id);
-                            recordList.Add(record);
+                            recordList.Add(record); //Add the record to the record list
                         }
-                        return recordList;
+                        connection.Close();
+                        return recordList; //return the populated list of records
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception) //Catches any SQL Exceptions and throws to the caller.
             {
                 throw new InvalidOperationException();
             }
         }
 
+        /// <summary>
+        /// Retrieves morphology info from the database matching the animal's unique ID
+        /// </summary>
+        /// <param name="id">animal ID</param>
+        /// <param name="connectionString">The connection string of the current database location</param>
+        /// <returns>the morphology info in an object</returns>
         public Morph RetrieveMorph(string id, string connectionString)
         {
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
-                    using (var command = new MySqlCommand("kabsu.RetrieveMorph", connection))
+                    using (var command = new MySqlCommand("kabsu.RetrieveMorph", connection)) //Initializes command to the RetrieveMorph stored procedure
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
+                        //Add the ID as an input for the procedure.
                         command.Parameters.AddWithValue("@AnimalID", id);
                         connection.Open();
 
-                        var reader = command.ExecuteReader();
+                        var reader = command.ExecuteReader(); //Executes a procedure with a reader returning existing record rows
+
                         Morph morph = new Morph();
-                        while (reader.Read())
+                        while (reader.Read()) //While there are still rows to return (1 expected)
                         {
-                            morph = new Morph(
+                            morph = new Morph( //Create a morphology object from the current row
                                reader.GetString(reader.GetOrdinal("Notes")),
                                reader.GetString(reader.GetOrdinal("Date")),
                                reader.GetInt32(reader.GetOrdinal("Vigor")).ToString(),
@@ -388,32 +457,40 @@ namespace WpfApp
                                reader.GetInt32(reader.GetOrdinal("Morph")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("Code")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("Units")).ToString(), id);
-                            if (morph.Notes != null)
+                            if (morph.Notes != null) //if notes exist, populate private notes string
                                 notes = morph.Notes;
                             isMorph = true;
                             isOldMorph = true;
                         }
-                        return morph;
+                        connection.Close();
+
+                        return morph; //return the morphology info
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception) //Catches any SQL Exceptions and throws to the caller.
             {
                 throw new InvalidOperationException();
             }
         }
 
+        /// <summary>
+        /// Event handler for when the Window loads, which populates the record row text boxes with any existing records
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RecordWindow_Load(object sender, RoutedEventArgs e)
         {
             int textCount = 0;
 
-            IEnumerable<TextBox> textBoxEnum = (IEnumerable<TextBox>)FindVisualChildren<TextBox>(this);
+            IEnumerable<TextBox> textBoxEnum = (IEnumerable<TextBox>)FindVisualChildren<TextBox>(this); //populates an enumerable with every text box in the window
             List<TextBox> textBoxes = textBoxEnum.ToList<TextBox>();
 
             if (recordList != null)
             {
-                foreach (Record r in recordList)
+                foreach (Record r in recordList) // for every existing record row
                 {
+                    //populate the relevent record text box
                     textBoxes[textCount].Text = r.ToFrom;
                     textBoxes[textCount + ROW_SPACING].Text = r.Date;
                     textBoxes[textCount + (ROW_SPACING * 2)].Text = r.Rec;
@@ -422,12 +499,13 @@ namespace WpfApp
 
                     textCount++;
 
-                    if (textCount == 32)
+                    if (textCount == 32) //only input records from the start index of each possible row (tab order is weird)
                         textCount += 128;
                 }
             }
             if (morph != null)
             {
+                //populate the relevent morphology text boxes
                 textBoxes[MORPH_ID].Text = morph.Date;
                 textBoxes[MORPH_ID + 1].Text = morph.Vigor;
                 textBoxes[MORPH_ID + 2].Text = morph.Mot;
@@ -446,18 +524,33 @@ namespace WpfApp
             isOldMorph = true;
         }
 
+        /// <summary>
+        /// Event handler for when any morphology info is changed in text boxes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MorphChanged(object sender, TextChangedEventArgs e)
         {
             isOldMorph = false;
         }
 
+        /// <summary>
+        /// Event handler for the "Notes" button, opens a window which holds notes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UxNotesButton_Click(object sender, RoutedEventArgs e)
         {
             noteWindow = new NoteWindow(notes);
-            noteWindow.Check += value => notes = value;
+            noteWindow.Check += value => notes = value; //returns value from window when check is called in note window
             noteWindow.ShowDialog();
             isOldMorph = false;
         }
+
+        /// <summary>
+        /// Opens a window allowing additional info to be added and modified. Put in separate window
+        /// to keep the original record card format.
+        /// </summary>
         private void CollectAdditionalInfo()
         {
             if (newRecord == true)
@@ -465,7 +558,7 @@ namespace WpfApp
             else
                 info = new AdditionalInfo(searchResult.Species, searchResult.Town, searchResult.State, searchResult.Country, Convert.ToBoolean(searchResult.INV.ToLower()));
             infoWindow = new AdditionalInfoWindow(info);
-            infoWindow.Check += value => info = value;
+            infoWindow.Check += value => info = value; //returns value from window when check is called in additional info window
             infoWindow.ShowDialog();
         }
     }

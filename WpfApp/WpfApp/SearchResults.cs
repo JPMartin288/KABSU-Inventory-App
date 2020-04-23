@@ -23,15 +23,16 @@ namespace WpfApp
         {
             //Uncomment Line below to use one-time database excel file insertion. Triggers on search, takes A LONG TIME, close and re-comment directly after search.
             //DataLoad.DatabaseLoad();
-            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
+            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true"; //The connection string of the current database location
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
-                    using (var command = new MySqlCommand("kabsu.RetrieveData", connection))
+                    using (var command = new MySqlCommand("kabsu.RetrieveData", connection)) //Initializes command to the RetrieveData stored procedure
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                    
+
+                        //Add variables from the search term as inputs for the procedure.
 
                         command.Parameters.AddWithValue("@Owner", st.Owner);
                         command.Parameters.AddWithValue("@Breed", st.Breed);
@@ -42,13 +43,13 @@ namespace WpfApp
                         command.Parameters.AddWithValue("@State", st.State);
                         connection.Open();
 
-                        var reader = command.ExecuteReader();
+                        var reader = command.ExecuteReader(); //Executes a procedure with a reader returning the result rows
 
                         var resultList = new List<SearchResult>();
 
-                        while (reader.Read())
+                        while (reader.Read()) //While there are still rows to return
                         {
-                            searchResult= new SearchResult(
+                            searchResult= new SearchResult( //Create a search result of the current row
                                reader.GetString(reader.GetOrdinal("Valid")),
                                reader.GetString(reader.GetOrdinal("CanNum")),
                                reader.GetString(reader.GetOrdinal("AnimalID")),
@@ -62,17 +63,17 @@ namespace WpfApp
                                reader.GetString(reader.GetOrdinal("State")),
                                reader.GetString(reader.GetOrdinal("Country")),
                                reader.GetString(reader.GetOrdinal("Species")));
-                            resultList.Add(searchResult);
+                            resultList.Add(searchResult); //Add the result to the result list
                         }
 
-                        return resultList;
+                        return resultList; //return the populated list of results
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception) //Catches any SQL Exceptions and aborts the procedure while sending an error message.
             {
                 MessageBox.Show("Unable to connect to database.");
-                return new List<SearchResult>();
+                return new List<SearchResult>(); //return empty list
             }
         }
     }

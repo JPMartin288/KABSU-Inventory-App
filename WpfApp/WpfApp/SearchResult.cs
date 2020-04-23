@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+Copyright 2019 Shant Haik, Daley Keister, Grady Salzman, & Jacob Schilmoeller
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,22 +15,15 @@ using System.Threading.Tasks;
 
 namespace WpfApp
 {
-    /*<DataGrid.Columns>
-                <DataGridTextColumn x:Name="INV" Header ="INV" Binding="{Binding Path=INV,Mode=Default}"/>
-                <DataGridTextColumn x:Name="CanNum" Header ="Can #"/>
-                <DataGridTextColumn x:Name="Code" Header ="Code"/>
-                <DataGridTextColumn x:Name="CollDate" Header ="Collection Date"/>
-                <DataGridTextColumn x:Name="Units" Header ="Units"/>
-                <DataGridTextColumn x:Name="AnimalName" Header ="Animal Name"/>
-                <DataGridTextColumn x:Name="Breed" Header ="Breed"/>
-                <DataGridTextColumn x:Name="RegNum" Header ="Reg #"/>
-                <DataGridTextColumn x:Name="Owner" Header ="Owner"/>
-                <DataGridTextColumn x:Name="Town" Header ="Town"/>
-                <DataGridTextColumn x:Name="ST" Header ="ST"/>
-            </DataGrid.Columns>*/
+    /// <summary>
+    /// Object containing the results of a search of samples, used to populate the Search Result Grid.
+    /// </summary>
     public class SearchResult
     {
         private string inv;
+        /// <summary>
+        /// Public accessor to the Valid/Invalid variable
+        /// </summary>
         public string INV
         {
             get
@@ -34,6 +36,9 @@ namespace WpfApp
             }
         }
         private string canNum;
+        /// <summary>
+        /// Public accessor to the Can Code variable
+        /// </summary>
         public string CanNum
         {
             get
@@ -46,6 +51,9 @@ namespace WpfApp
             }
         }
         private string code;
+        /// <summary>
+        /// Public accessor to the Animal ID variable
+        /// </summary>
         public string Code
         {
             get
@@ -58,6 +66,9 @@ namespace WpfApp
             }
         }
         private string collDate;
+        /// <summary>
+        /// Public accessor to the Collection Date variable
+        /// </summary>
         public string CollDate
         {
             get
@@ -70,6 +81,9 @@ namespace WpfApp
             }
         }
         private string units;
+        /// <summary>
+        /// Public accessor to the Total Units variable
+        /// </summary>
         public string Units
         {
             get
@@ -82,6 +96,9 @@ namespace WpfApp
             }
         }
         private string animalName;
+        /// <summary>
+        /// Public accessor to the Animal Name variable
+        /// </summary>
         public string AnimalName
         {
             get
@@ -94,6 +111,9 @@ namespace WpfApp
             }
         }
         private string breed;
+        /// <summary>
+        /// Public accessor to the Breed variable
+        /// </summary>
         public string Breed
         {
             get
@@ -106,6 +126,9 @@ namespace WpfApp
             }
         }
         private string regNum;
+        /// <summary>
+        /// Public accessor to the Registration Number variable
+        /// </summary>
         public string RegNum
         {
             get
@@ -118,6 +141,9 @@ namespace WpfApp
             }
         }
         private string owner;
+        /// <summary>
+        /// Public accessor to the Owner variable
+        /// </summary>
         public string Owner
         {
             get
@@ -130,6 +156,9 @@ namespace WpfApp
             }
         }
         private string town;
+        /// <summary>
+        /// Public accessor to the City variable
+        /// </summary>
         public string Town
         {
             get
@@ -142,6 +171,9 @@ namespace WpfApp
             }
         }
         private string state;
+        /// <summary>
+        /// Public accessor to the State variable
+        /// </summary>
         public string State
         {
             get
@@ -153,7 +185,11 @@ namespace WpfApp
                 this.state = value;
             }
         }
+
         private string country;
+        /// <summary>
+        /// Public accessor to the Country variable
+        /// </summary>
         public string Country
         {
             get
@@ -166,6 +202,9 @@ namespace WpfApp
             }
         }
         private string species;
+        /// <summary>
+        /// Public accessor to the Species variable
+        /// </summary>
         public string Species
         {
             get
@@ -178,20 +217,20 @@ namespace WpfApp
             }
         }
         /// <summary>
-        /// A constructor for SearchResult
+        /// A constructor for the result of a Search in the database.
         /// </summary>
-        /// <param name="valid">String representation of a boolean stating whether or not this entry has been verified for accuracy</param>
-        /// <param name="canNum">String representing the can where the sample is stored</param>
-        /// <param name="code">String representing the identification code of the sample</param>
-        /// <param name="collDate">String representing the date when a sample was collected (may be a string which is given to a third-party to obtain that date)</param>
-        /// <param name="units">The number of straws available for a sample</param>
+        /// <param name="valid">The specification of whether or not the result is valid</param>
+        /// <param name="canNum">The Can Number of the animal in the result</param>
+        /// <param name="code">The animal ID of the animal in the result</param>
+        /// <param name="collDate">The collection date of the sample</param>
+        /// <param name="units">The number of straws available for the sample</param>
         /// <param name="animalName">The name of the animal</param>
         /// <param name="breed">The breed of the animal</param>
         /// <param name="regNum">The registration number of the animal</param>
-        /// <param name="owner">The owner of the sample</param>
-        /// <param name="town">The town where the owner resides</param>
-        /// <param name="state">The state where the owner resides</param>
-        /// <param name="country">The country where the owner resides</param>
+        /// <param name="owner">The owner of the animal</param>
+        /// <param name="town">The town of the owner</param>
+        /// <param name="state">The state of the owner</param>
+        /// <param name="country">The country of the owner</param>
         /// <param name="species">The species of the animal</param>
         public SearchResult(string valid, string canNum, string code, string collDate, string units, string animalName, string breed, string regNum, string owner, string town, string state, string country, string species)
         {
@@ -210,8 +249,12 @@ namespace WpfApp
             this.Species = species;
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public SearchResult()
         {
+
         }
     }
 }

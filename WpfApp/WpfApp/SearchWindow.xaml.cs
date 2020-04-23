@@ -29,20 +29,35 @@ namespace WpfApp
         private SearchResults searchResults;
         private SearchTerm searchTerm;
         SearchWindowResults windowResults;
+
+        /// <summary>
+        /// default constructor for the Search Window
+        /// </summary>
         public SearchWindow()
         {
             InitializeComponent();
         }
-         
 
-        // Upon clicking "Search," opens a search results window and closes this window
+
+        /// <summary>
+        /// Event Handler for the "Search" Button, calls  the database search method and opens a
+        /// SearchWindowResults window containing its contents
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UxSearch_Click(object sender, RoutedEventArgs e)
         {
-            windowResults = new SearchWindowResults(CalculateResultList(), searchTerm);
+            windowResults = new SearchWindowResults(CalculateResultList(), searchTerm); // calls the database search method to initialize the window
             windowResults.ShowDialog();
             this.Close();
         }
 
+        /// <summary>
+        /// Event Handler for the "Calculate Unit Sum" Button, which calculates the sum of the total
+        /// unit variables of each row from a database search, and shows a message box with the result
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void UxUnitSum_Click(object sender, RoutedEventArgs e)
         {
             List<SearchResult> results = CalculateResultList();
@@ -54,6 +69,11 @@ namespace WpfApp
             MessageBox.Show("Sum of Units: " + unitSum);
         }
 
+        /// <summary>
+        /// Sorts the given term into its variable type based on the contents of the drop down box in SearchWindow
+        /// </summary>
+        /// <param name="term">unsorted given term</param>
+        /// <param name="contents">contents of the drop down box</param>
         public void SetTerm(string term, string contents)
         {
             switch (term)
@@ -81,8 +101,15 @@ namespace WpfApp
                     break;
             }
         }
+        /// <summary>
+        /// Sorts the terms in the text boxes by the SearchContents text, and creates a Search Term to
+        /// find the search results with. Returns the results of the search in SearchResults
+        /// </summary>
+        /// <returns>A list of search results</returns>
         private List<SearchResult> CalculateResultList()
         {
+            //Sort the unspecified search terms
+
             SetTerm(uxSearchTerm1.Text, uxSearchContents1.Text);
             SetTerm(uxSearchTerm2.Text, uxSearchContents2.Text);
             SetTerm(uxSearchTerm3.Text, uxSearchContents3.Text);
@@ -91,7 +118,7 @@ namespace WpfApp
             searchTerm = new SearchTerm(canNum, code, animalName, breed, owner, town, state);
             searchTerm = new SearchTerm(canNum, code, animalName, breed, owner, town, state);
             searchResults = new SearchResults();
-            List<SearchResult> results = searchResults.retrieveData(searchTerm);
+            List<SearchResult> results = searchResults.retrieveData(searchTerm); //Executes database search procedure, returns SearchResult List
             return results;
         }
     }

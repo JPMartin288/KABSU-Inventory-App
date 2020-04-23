@@ -23,16 +23,19 @@ namespace WpfApp
     {
         RecordWindow recordWindow;
         SearchWindow searchWindow;
+        /// <summary>
+        /// Default constructor for MainWindow
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Upon clicking "Add New Record," opens a Record Window and closes the Main Window 
+        /// Event handler for the "Add New Record" Button, opens empty RecordWindow
         /// </summary>
-        /// <param name="sender">object containing sender information</param>
-        /// <param name="e">EventArgs associated with button click</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             recordWindow = new RecordWindow();
@@ -40,10 +43,10 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Upon clicking "Modify Existing Record," opens a Search Window and closes the Main Window
+        /// Event handler for the "Add New Record" Button, opens new SearchWindow
         /// </summary>
-        /// <param name="sender">object containing sender information</param>
-        /// <param name="e">EventArgs associated with button click</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UxModifyRecord_Click(object sender, RoutedEventArgs e)
         {
             searchWindow = new SearchWindow();
