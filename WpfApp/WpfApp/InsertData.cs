@@ -16,24 +16,21 @@ namespace WpfApp
         /// <summary>
         /// Inserts a person's information into the database
         /// </summary>
-        /// <param name="personID">The ID number of the person</param>
         /// <param name="name">The name of the person</param>
         /// <param name="city">The city where the person lives</param>
         /// <param name="state">The State/Province where the person lives</param>
         /// <param name="country">The country where the person lives</param>
         /// <returns>If unable to insert person into database, returns the error message. Otherwise, returns an empty string.</returns>
-        public static string InsertPerson(int personID, string name, string city, string state, string country)
+        public static string InsertPerson(string name, string city, string state, string country)
         {
             string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
                 {
-                    using (var insertCommand = new MySqlCommand("kabsu.InsertPeople", connection))
+                    using (var insertCommand = new MySqlCommand("kabsu.InsertPerson", connection))
                     {
                         insertCommand.CommandType = CommandType.StoredProcedure;
-
-                        insertCommand.Parameters.AddWithValue("@PersonID", personID);
                         insertCommand.Parameters.AddWithValue("@Name", name);
                         insertCommand.Parameters.AddWithValue("@City", city);
                         insertCommand.Parameters.AddWithValue("@State", state);
@@ -41,9 +38,8 @@ namespace WpfApp
 
                         connection.Open();
 
-                        var reader = insertCommand.ExecuteReader();
-
-                        reader.Read();
+                        var reader = insertCommand.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
                 return "";
@@ -65,7 +61,7 @@ namespace WpfApp
         /// <returns>If unable to insert into database, returns the error message. Otherwise, returns an empty string.</returns>
         public static string InsertAnimal(string animalID, string name, string breed, string species, string regNum)
         {
-            string connectionString = "Server=localhost;Database=kabsu; User ID = appuser; Password = test; Integrated Security=true";
+            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
@@ -82,9 +78,8 @@ namespace WpfApp
 
                         connection.Open();
 
-                        var reader = command.ExecuteReader();
-
-                        reader.Read();
+                        var reader = command.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
                 return "";
@@ -110,7 +105,7 @@ namespace WpfApp
         /// <returns>If unable to insert into database, returns the error message. Otherwise, returns an empty string.</returns>
         public static string InsertSample(string valid, string canNum, string code, string collectionDate, int numUnits, string notes, string personName, string city, string state)
         {
-            string connectionString = "Server=localhost;Database=kabsu; User ID = appuser; Password = test; Integrated Security=true";
+            string connectionString = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true";
             try
             {
                 using (var connection = new MySqlConnection(connectionString))
@@ -131,9 +126,8 @@ namespace WpfApp
 
                         connection.Open();
 
-                        var reader = command.ExecuteReader();
-
-                        reader.Read();
+                        var reader = command.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
                 return "";

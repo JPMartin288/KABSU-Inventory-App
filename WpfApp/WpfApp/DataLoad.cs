@@ -18,7 +18,7 @@ namespace WpfApp
         /// </summary>
         public static void DatabaseLoad()
         {
-            using (StreamReader sr = new StreamReader("C:/Users/e10d1/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/People.csv")) //change this file path to match where it is on your machine
+            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/People.csv")) //change this file path to match where it is on your machine
             {
                 string line;
                 string[] lineTokens;
@@ -38,13 +38,13 @@ namespace WpfApp
 
                     // Add entry to database
                     if (name == "")
-                        errorList.Append(InsertData.InsertPerson(Convert.ToInt32(lineTokens[0]), lineTokens[1], lineTokens[2], lineTokens[3], lineTokens[4]));
+                        errorList.Append(InsertData.InsertPerson(lineTokens[1], lineTokens[2], lineTokens[3], lineTokens[4]));
                     else
-                        errorList.Append(InsertData.InsertPerson(Convert.ToInt32(lineTokens[0]), name, lineTokens[3], lineTokens[4], lineTokens[5]));
+                        errorList.Append(InsertData.InsertPerson(name, lineTokens[3], lineTokens[4], lineTokens[5]));
                 }
             }
 
-            using (StreamReader sr = new StreamReader("C:/Users/e10d1/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/Animal.csv"))
+            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/Animal.csv"))
             {
                 string line;
                 string[] lineTokens;
@@ -68,7 +68,7 @@ namespace WpfApp
                 }
             }
 
-            using (StreamReader sr = new StreamReader("C:/Users/e10d1/source/repos/KABSU-Inventory-App/Database Files/Database Sample Data/sample.csv"))
+            using (StreamReader sr = new StreamReader("C:/Program Files/MySQL/MySQL Server 8.0/Uploads/sample.csv"))
             {
                 string line;
                 string[] lineTokens;

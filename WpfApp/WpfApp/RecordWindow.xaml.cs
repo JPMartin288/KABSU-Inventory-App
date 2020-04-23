@@ -37,15 +37,12 @@ namespace WpfApp
         private Morph morph;
         private bool isMorph;
         private bool isOldMorph;
-        private bool populating;
         private bool newRecord;
-        private bool isOldRecord;
         private NoteWindow noteWindow;
         private AdditionalInfoWindow infoWindow;
         public RecordWindow()
         {
             newRecord = true;
-            isOldRecord = false;
             searchResult = new SearchResult();
             InitializeComponent();
             notes = "";
@@ -70,7 +67,6 @@ namespace WpfApp
             notes = "";
             isMorph = false;
             isOldMorph = false;
-            populating = false;
             Closing += RecordWindow_Closing;
             recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING);
             morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING);
@@ -129,13 +125,6 @@ namespace WpfApp
             try
             {
                 StoreRecords(CONNECTION_STRING);
-            }
-            catch (InvalidOperationException)
-            {
-                ShowErrorMessage();
-            }
-            try
-            {
                 StoreMorph(CONNECTION_STRING);
             }
             catch (InvalidOperationException)
