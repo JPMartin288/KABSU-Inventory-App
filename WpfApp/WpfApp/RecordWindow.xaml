@@ -91,38 +91,38 @@
             <TextBox x:Name="uxToFromLeft30" Grid.Row="31" Grid.Column="0" FontSize="14"/>
             <TextBox x:Name="uxToFromLeft31" Grid.Row="32" Grid.Column="0" FontSize="14"/>
             <TextBox x:Name="uxToFromLeft32" Grid.Row="33" Grid.Column="0" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft1" Grid.Row="2" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft2" Grid.Row="3" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft3" Grid.Row="4" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft4" Grid.Row="5" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft5" Grid.Row="6" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft6" Grid.Row="7" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft7" Grid.Row="8" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft8" Grid.Row="9" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft9" Grid.Row="10" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft10" Grid.Row="11" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft11" Grid.Row="12" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft12" Grid.Row="13" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft13" Grid.Row="14" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft14" Grid.Row="15" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft15" Grid.Row="16" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft16" Grid.Row="17" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft17" Grid.Row="18" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft18" Grid.Row="19" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft19" Grid.Row="20" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft20" Grid.Row="21" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft21" Grid.Row="22" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft22" Grid.Row="23" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft23" Grid.Row="24" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft24" Grid.Row="25" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft25" Grid.Row="26" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft26" Grid.Row="27" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft27" Grid.Row="28" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft28" Grid.Row="29" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft29" Grid.Row="30" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft30" Grid.Row="31" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft31" Grid.Row="32" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateLeft32" Grid.Row="33" Grid.Column="1" FontSize="14"/>
+            <TextBox x:Name="uxDateLeft1" Grid.Row="2" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft2" Grid.Row="3" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft3" Grid.Row="4" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft4" Grid.Row="5" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft5" Grid.Row="6" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft6" Grid.Row="7" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft7" Grid.Row="8" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft8" Grid.Row="9" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft9" Grid.Row="10" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft10" Grid.Row="11" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft11" Grid.Row="12" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft12" Grid.Row="13" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft13" Grid.Row="14" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft14" Grid.Row="15" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft15" Grid.Row="16" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft16" Grid.Row="17" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft17" Grid.Row="18" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft18" Grid.Row="19" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft19" Grid.Row="20" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft20" Grid.Row="21" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft21" Grid.Row="22" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft22" Grid.Row="23" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft23" Grid.Row="24" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft24" Grid.Row="25" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft25" Grid.Row="26" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft26" Grid.Row="27" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft27" Grid.Row="28" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft28" Grid.Row="29" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft29" Grid.Row="30" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft30" Grid.Row="31" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft31" Grid.Row="32" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateLeft32" Grid.Row="33" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
             <TextBox x:Name="uxRecLeft1" Grid.Row="2" Grid.Column="2" FontSize="14"/>
             <TextBox x:Name="uxRecLeft2" Grid.Row="3" Grid.Column="2" FontSize="14"/>
             <TextBox x:Name="uxRecLeft3" Grid.Row="4" Grid.Column="2" FontSize="14"/>
@@ -304,38 +304,38 @@
             <TextBox x:Name="uxToFromRight30" Grid.Row="31" Grid.Column="0" FontSize="14"/>
             <TextBox x:Name="uxToFromRight31" Grid.Row="32" Grid.Column="0" FontSize="14"/>
             <TextBox x:Name="uxToFromRight32" Grid.Row="33" Grid.Column="0" FontSize="14"/>
-            <TextBox x:Name="uxDateRight1" Grid.Row="2" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight2" Grid.Row="3" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight3" Grid.Row="4" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight4" Grid.Row="5" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight5" Grid.Row="6" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight6" Grid.Row="7" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight7" Grid.Row="8" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight8" Grid.Row="9" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight9" Grid.Row="10" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight10" Grid.Row="11" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight11" Grid.Row="12" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight12" Grid.Row="13" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight13" Grid.Row="14" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight14" Grid.Row="15" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight15" Grid.Row="16" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight16" Grid.Row="17" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight17" Grid.Row="18" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight18" Grid.Row="19" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight19" Grid.Row="20" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight20" Grid.Row="21" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight21" Grid.Row="22" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight22" Grid.Row="23" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight23" Grid.Row="24" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight24" Grid.Row="25" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight25" Grid.Row="26" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight26" Grid.Row="27" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight27" Grid.Row="28" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight28" Grid.Row="29" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight29" Grid.Row="30" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight30" Grid.Row="31" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight31" Grid.Row="32" Grid.Column="1" FontSize="14"/>
-            <TextBox x:Name="uxDateRight32" Grid.Row="33" Grid.Column="1" FontSize="14"/>
+            <TextBox x:Name="uxDateRight1" Grid.Row="2" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight2" Grid.Row="3" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight3" Grid.Row="4" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight4" Grid.Row="5" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight5" Grid.Row="6" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight6" Grid.Row="7" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight7" Grid.Row="8" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight8" Grid.Row="9" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight9" Grid.Row="10" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight10" Grid.Row="11" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight11" Grid.Row="12" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight12" Grid.Row="13" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight13" Grid.Row="14" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight14" Grid.Row="15" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight15" Grid.Row="16" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight16" Grid.Row="17" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight17" Grid.Row="18" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight18" Grid.Row="19" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight19" Grid.Row="20" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight20" Grid.Row="21" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight21" Grid.Row="22" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight22" Grid.Row="23" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight23" Grid.Row="24" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight24" Grid.Row="25" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight25" Grid.Row="26" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight26" Grid.Row="27" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight27" Grid.Row="28" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight28" Grid.Row="29" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight29" Grid.Row="30" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight30" Grid.Row="31" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight31" Grid.Row="32" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
+            <TextBox x:Name="uxDateRight32" Grid.Row="33" Grid.Column="1" FontSize="14" Text="mm/dd/yyyy" Foreground="LightGray" GotFocus="DateText_RemoveDateText"/>
             <TextBox x:Name="uxRecRight1" Grid.Row="2" Grid.Column="2" FontSize="14"/>
             <TextBox x:Name="uxRecRight2" Grid.Row="3" Grid.Column="2" FontSize="14"/>
             <TextBox x:Name="uxRecRight3" Grid.Row="4" Grid.Column="2" FontSize="14"/>

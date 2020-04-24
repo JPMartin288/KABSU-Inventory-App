@@ -30,6 +30,7 @@ namespace WpfApp
         private string oldOwner;
         private string oldCity;
         private string oldState;
+        private string oldCanNum;
 
         private AdditionalInfo info;
         private static int ID_INDEX = 321; //the index of the animal ID
@@ -66,6 +67,7 @@ namespace WpfApp
             newRecord = false;
             searchResult = search;
             oldCode = searchResult.Code;
+            oldCanNum = searchResult.CanNum;
             oldOwner = searchResult.Owner;
             oldCity = searchResult.Town;
             oldState = searchResult.State;
@@ -110,22 +112,18 @@ namespace WpfApp
             List<string> list = new List<string>();
             List<string> morphList = new List<string>();
             int textCount = 0;
-            int recordCount = 0;
             foreach(TextBox tb in FindVisualChildren<TextBox>(this))
             {
                 list.Add(tb.Text);
-                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxMorphGrid)) //if the text added belongs to record rows
-                {
+                if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxMorphGrid) && tb.Text != "mm/dd/yyyy") //if the text added belongs to record rows
                     textCount++;
-                    recordCount++;
-                }
                 if (tb.Text != "" && (tb.Parent != uxBottomGrid && tb.Parent != uxTopGrid1 && tb.Parent != uxTopGrid2)) //if any morphology data is found
                     isMorph = true;
             }
             recordList = new List<Record>();
             for (int i = 0; textCount > 0; i++) //while there  is record text to be combined into record rows
             {
-                if (list[i] != "" || list[i + ROW_SPACING] != "" || list[i + (ROW_SPACING * 2)] != "" || list[i + (ROW_SPACING * 3)] != "" || list[i + (ROW_SPACING * 4)] != "")
+                if (list[i] != "" || (list[i + ROW_SPACING] != "" && list[i + ROW_SPACING] != "mm/dd/yyyy") || list[i + (ROW_SPACING * 2)] != "" || list[i + (ROW_SPACING * 3)] != "" || list[i + (ROW_SPACING * 4)] != "")
                 {
                     recordList.Add(new Record(list[i], list[i + ROW_SPACING], list[i + (ROW_SPACING * 2)], list[i + (ROW_SPACING * 3)], list[i + (ROW_SPACING * 4)], list[ID_INDEX]));
                     
@@ -482,9 +480,23 @@ namespace WpfApp
         private void RecordWindow_Load(object sender, RoutedEventArgs e)
         {
             int textCount = 0;
-
             IEnumerable<TextBox> textBoxEnum = (IEnumerable<TextBox>)FindVisualChildren<TextBox>(this); //populates an enumerable with every text box in the window
             List<TextBox> textBoxes = textBoxEnum.ToList<TextBox>();
+
+            SortListByDate(); //if possible, sort records to populate by oldest record first
+            if (!CheckBalance())
+            {
+                MessageBoxResult result = MessageBox.Show("Unexpected Balance in one or more record rows. Auto-correct?","KABSU App", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+
+                        MessageBox.Show(ReplaceBalance() + " rows changed", "KABSU App");
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
 
             if (recordList != null)
             {
@@ -493,6 +505,7 @@ namespace WpfApp
                     //populate the relevent record text box
                     textBoxes[textCount].Text = r.ToFrom;
                     textBoxes[textCount + ROW_SPACING].Text = r.Date;
+                    textBoxes[textCount + ROW_SPACING].Foreground = Brushes.Black;
                     textBoxes[textCount + (ROW_SPACING * 2)].Text = r.Rec;
                     textBoxes[textCount + (ROW_SPACING * 3)].Text = r.Ship;
                     textBoxes[textCount + (ROW_SPACING * 4)].Text = r.Balance;
@@ -522,6 +535,88 @@ namespace WpfApp
                 uxMorphDate.Text = searchResult.CollDate;
             }
             isOldMorph = true;
+        }
+
+        /// <summary>
+        /// Checks to see that every balance is what it is expected to be,
+        /// from the order of records and the balances given
+        /// </summary>
+        /// <returns>whether any rows are percieved as incorrect</returns>
+        private bool CheckBalance()
+        {
+            int expectedBalance = 0;
+            bool isCorrectBalance = true;
+            foreach(Record r in recordList)
+            {
+                expectedBalance -= Convert.ToInt32(r.Ship);
+                expectedBalance += Convert.ToInt32(r.Rec);
+                if (expectedBalance != Convert.ToInt32(r.Balance))
+                    isCorrectBalance = false;
+            }
+            return isCorrectBalance;
+        }
+
+        private int ReplaceBalance()
+        {
+            int expectedBalance = 0;
+            int editedRows = 0;
+            foreach (Record r in recordList)
+            {
+                expectedBalance -= Convert.ToInt32(r.Ship);
+                expectedBalance += Convert.ToInt32(r.Rec);
+                if (Convert.ToInt32(r.Balance) != expectedBalance)
+                    editedRows++;
+                r.Balance = expectedBalance.ToString();
+            }
+            return editedRows;
+        }
+
+        /// <summary>
+        /// Sorts the record list by date if the dates are in the correct format
+        /// </summary>
+        private void SortListByDate()
+        {
+            for(int i = 0; i < recordList.Count; i++)
+            {
+                //Replace various other formats
+                if (recordList[i].Date[2] == '-' || recordList[i].Date[1] == '-')
+                    recordList[i].Date.Replace('-', '/');
+                if (recordList[i].Date[2] == '\\' || recordList[i].Date[1] == '\\')
+                    recordList[i].Date.Replace('\\', '/');
+
+                //Don't try to sort if the date is in an invalid format
+                if (recordList[i].Date[2] != '/' && recordList[i].Date[1] != '/')
+                    return;
+                string[] recordSplit = recordList[i].Date.Split('/');
+                for (int j = 0; j < recordList.Count; j++) //if the date is earlier than the later parts of the list
+                {
+                    string[] oldRecordSplit = recordList[j].Date.Split('/');
+                    if (Convert.ToInt32(recordSplit[1]) <= Convert.ToInt32(oldRecordSplit[1]) && 
+                        Convert.ToInt32(recordSplit[0]) <= Convert.ToInt32(oldRecordSplit[0]) && 
+                        Convert.ToInt32(recordSplit[2]) <= Convert.ToInt32(oldRecordSplit[2]))
+                    {
+                        ExchangeRecord(recordList, i, j); //exchange the places of the two records
+                        //re-initialize split records
+                        recordSplit = recordList[i].Date.Split('/');
+                        oldRecordSplit = recordList[j].Date.Split('/');
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simple method, exchanges places in a list
+        /// </summary>
+        /// <param name="data">given list of records</param>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        public static void ExchangeRecord(List<Record> data, int m, int n)
+        {
+            Record temporary;
+
+            temporary = data[m];
+            data[m] = data[n];
+            data[n] = temporary;
         }
 
         /// <summary>
@@ -560,6 +655,16 @@ namespace WpfApp
             infoWindow = new AdditionalInfoWindow(info);
             infoWindow.Check += value => info = value; //returns value from window when check is called in additional info window
             infoWindow.ShowDialog();
+        }
+
+        private void DateText_RemoveDateText(object sender, RoutedEventArgs e)
+        {
+            TextBox dateBox = sender as TextBox;
+            if (dateBox.Text == "mm/dd/yyyy")
+            {
+                dateBox.Text = "";
+                dateBox.Foreground = Brushes.Black;
+            }
         }
     }
 
