@@ -110,6 +110,36 @@ namespace WpfApp
                 this.animalId = value;
             }
         }
+        private string canNum;
+        /// <summary>
+        /// Public accessor to the Can Number variable
+        /// </summary>
+        public string CanNum
+        {
+            get
+            {
+                return this.canNum;
+            }
+            set
+            {
+                this.canNum = value;
+            }
+        }
+        private string collDate;
+        /// <summary>
+        /// Public accessor to the Animal ID variable
+        /// </summary>
+        public string CollDate
+        {
+            get
+            {
+                return this.collDate;
+            }
+            set
+            {
+                this.collDate = value;
+            }
+        }
         /// <summary>
         /// Constructor for the Record Object
         /// </summary>
@@ -119,7 +149,7 @@ namespace WpfApp
         /// <param name="ship">How many units are shipped in the record, if any</param>
         /// <param name="balance">How much the total balance is in the record</param>
         /// <param name="id">The ID of the parent the record associates with</param>
-        public Record(string toFrom, string date, string rec, string ship, string balance, string id)
+        public Record(string toFrom, string date, string rec, string ship, string balance, string id, string canNum, string collDate)
         {
             this.toFrom = toFrom;
             this.date = date;
@@ -127,6 +157,8 @@ namespace WpfApp
             this.ship = ship;
             this.balance = balance;
             this.animalId = id;
+            this.canNum = canNum;
+            this.collDate = collDate;
         }
     }
 }

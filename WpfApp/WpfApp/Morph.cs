@@ -140,6 +140,36 @@ namespace WpfApp
                 this.id = value;
             }
         }
+        private string canNum;
+        /// <summary>
+        /// Public accessor to the Can Number variable
+        /// </summary>
+        public string CanNum
+        {
+            get
+            {
+                return this.canNum;
+            }
+            set
+            {
+                this.canNum = value;
+            }
+        }
+        private string collDate;
+        /// <summary>
+        /// Public accessor to the Collection Date variable
+        /// </summary>
+        public string CollDate
+        {
+            get
+            {
+                return this.collDate;
+            }
+            set
+            {
+                this.collDate = value;
+            }
+        }
 
         /// <summary>
         /// Constructor for the Morphology Object
@@ -152,7 +182,7 @@ namespace WpfApp
         /// <param name="code">the morphology code of the animal</param>
         /// <param name="units">the morphology units of the animal</param>
         /// <param name="id">the animal ID</param>
-        public Morph(string notes, string date, string vigor, string mot, string morph, string code, string units, string id)
+        public Morph(string notes, string date, string vigor, string mot, string morph, string code, string units, string id, string canNum, string collDate)
         {
             this.notes = notes;
             this.date = date;
@@ -162,6 +192,8 @@ namespace WpfApp
             this.code = code;
             this.units = units;
             this.id = id;
+            this.canNum = canNum;
+            this.collDate = collDate;
         }
 
         /// <summary>

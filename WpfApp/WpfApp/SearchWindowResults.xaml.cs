@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace WpfApp
         private RecordWindow recordWindow;
         private SearchResults searchResults;
         private SearchTerm searchTerm;
-
+        private static string CONNECTION_STRING = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true"; //The connection string of the current database location
         /// <summary>
         /// Constructor for the window, which initializes initial column width and sets the Grid
         /// item source to be a list of search results.
@@ -68,6 +70,14 @@ namespace WpfApp
         /// <param name="e"></param>
         private void UxRefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            RetrieveAndRefreshResults();
+        }
+
+        /// <summary>
+        ///  Re-initializes the current window with refreshed search results.
+        /// </summary>
+        private void RetrieveAndRefreshResults()
+        {
             searchResults = new SearchResults();
             List<SearchResult> results = searchResults.retrieveData(searchTerm); //initializes the data grid's context to be the search results
             InitializeComponent();
@@ -83,6 +93,82 @@ namespace WpfApp
             OwnerColumn.Width = 100;
             TownColumn.Width = 100;
             StateColumn.Width = 42;
+        }
+
+        /// <summary>
+        /// Event handler for the "Delete Selected Result" button. Deletes the sample, and any connecting parent data
+        /// if the result is the last occurrance of the parent data (e.g. it won't delete an animal if another can belongs to it).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool deleteItem = false;
+            if (uxSearchResults.SelectedItem != null) //if an item was selected
+            {
+                //checks to see if the button was pressed accidentally
+                MessageBoxResult result = MessageBox.Show("Are you sure you would like to delete this result? All internal records of the result will be deleted as well.", "KABSU App", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (uxSearchResults.SelectedItems.Count > 1)
+                        {
+                            //checks to see if the user accidentally dragged the mouse over multiple rows
+                            MessageBoxResult extraResult = MessageBox.Show("You have selected multiple rows to delete. Are you SURE you mean to delete multiple results?", "KABSU App", MessageBoxButton.YesNo);
+                            switch (extraResult)
+                            {
+                                case MessageBoxResult.Yes:
+                                    deleteItem = true;
+                                    break;
+                                case MessageBoxResult.No:
+                                    break;
+                            }
+                        }else
+                            deleteItem = true;
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+                if (deleteItem) //if the user actually wants to delete everything selected
+                {
+                    try
+                    {
+                        using (var connection = new MySqlConnection(CONNECTION_STRING))
+                        {
+                            foreach (object o in uxSearchResults.SelectedItems)
+                            {
+                                SearchResult searchResultToRemove = (SearchResult)o;
+                                MessageBox.Show(searchResultToRemove.AnimalName);
+                                using (var command = new MySqlCommand("kabsu.DeleteData", connection)) //Initializes command to the DeleteData stored procedure
+                                {
+                                    command.CommandType = CommandType.StoredProcedure;
+
+                                    //Add the relevant inputs for the delete procedure.
+                                    command.Parameters.AddWithValue("@CanNum", searchResultToRemove.CanNum);
+                                    command.Parameters.AddWithValue("@CollDate", searchResultToRemove.CollDate);
+                                    command.Parameters.AddWithValue("@AnimalID", searchResultToRemove.Code);
+                                    command.Parameters.AddWithValue("@Name", searchResultToRemove.Owner);
+                                    command.Parameters.AddWithValue("@City", searchResultToRemove.Town);
+                                    command.Parameters.AddWithValue("@State", searchResultToRemove.State);
+
+                                    connection.Open();
+                                    var reader = command.ExecuteNonQuery(); //Executes the procedure
+                                    connection.Close();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex) //Catches any SQL Exceptions and sends an error message.
+                    {
+                        MessageBox.Show("Failed to delete selected row(s) from the database.");
+                    }
+                }
+                RetrieveAndRefreshResults();
+            }
+            else
+            {
+                MessageBox.Show("Please select a result to delete from the database.");
+            }
         }
     }
 }

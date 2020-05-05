@@ -22,18 +22,13 @@ namespace WpfApp
     /// </summary>
     public partial class RecordWindow : Window
     {
-        SearchResult searchResult;
+        SearchResult searchResult; // old search result object, used in case any identifying fields are updated
         private string notes; //classwide string containing misc. notes
-
-        //Old variables in case variables used to identify the record card in the database were changed
-        private string oldCode; 
-        private string oldOwner;
-        private string oldCity;
-        private string oldState;
-        private string oldCanNum;
 
         private AdditionalInfo info;
         private static int ID_INDEX = 321; //the index of the animal ID
+        private static int CAN_INDEX = 320; //the index of the can number
+        private static int DATE_INDEX = 326; //the index of the collection Date
         private static int ROW_SPACING = 32; //the spacing between text boxes in the same record row
         private static int MORPH_ID = 326; //the index of the morphology ID
         private static string CONNECTION_STRING = "Server=mysql.cs.ksu.edu;Database=kabsu; User ID = kabsu; Password = insecurepassword; Integrated Security=true"; //The connection string of the current database location
@@ -66,11 +61,6 @@ namespace WpfApp
         {
             newRecord = false;
             searchResult = search;
-            oldCode = searchResult.Code;
-            oldCanNum = searchResult.CanNum;
-            oldOwner = searchResult.Owner;
-            oldCity = searchResult.Town;
-            oldState = searchResult.State;
 
             InitializeComponent();
 
@@ -87,9 +77,16 @@ namespace WpfApp
 
             Closing += RecordWindow_Closing;
 
-            recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing specific record entries
-            morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing morphology info
-        }
+            try
+            {
+                recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing specific record entries
+                morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing morphology info
+            }
+            catch (InvalidOperationException)
+            {
+                ShowErrorMessage();
+            }
+}
 
         /// <summary>
         /// Event handler on closing the window. Prompts the user for additional info, then store the information into the database.
@@ -125,7 +122,7 @@ namespace WpfApp
             {
                 if (list[i] != "" || (list[i + ROW_SPACING] != "" && list[i + ROW_SPACING] != "mm/dd/yyyy") || list[i + (ROW_SPACING * 2)] != "" || list[i + (ROW_SPACING * 3)] != "" || list[i + (ROW_SPACING * 4)] != "")
                 {
-                    recordList.Add(new Record(list[i], list[i + ROW_SPACING], list[i + (ROW_SPACING * 2)], list[i + (ROW_SPACING * 3)], list[i + (ROW_SPACING * 4)], list[ID_INDEX]));
+                    recordList.Add(new Record(list[i], list[i + ROW_SPACING], list[i + (ROW_SPACING * 2)], list[i + (ROW_SPACING * 3)], list[i + (ROW_SPACING * 4)], list[ID_INDEX], list[CAN_INDEX], list[DATE_INDEX]));
                     
                     //Decrement text counter
                     if (list[i] != "")
@@ -143,7 +140,7 @@ namespace WpfApp
             if (isMorph) //if morphology info exists
             {
                 //create new morphology object
-                morph = new Morph(notes, list[MORPH_ID], list[MORPH_ID + 1], list[MORPH_ID + 2], list[MORPH_ID + 3], list[MORPH_ID + 4], list[MORPH_ID + 5], list[ID_INDEX]);
+                morph = new Morph(notes, list[MORPH_ID], list[MORPH_ID + 1], list[MORPH_ID + 2], list[MORPH_ID + 3], list[MORPH_ID + 4], list[MORPH_ID + 5], list[ID_INDEX], list[CAN_INDEX], list[DATE_INDEX]);
             }
             try
             {
@@ -201,12 +198,14 @@ namespace WpfApp
                 {
                     using (var connection = new MySqlConnection(connectionString))
                     {
-                        using (var command = new MySqlCommand("kabsu.DeleteData", connection)) //Initializes command to the DeleteData stored procedure
+                        using (var command = new MySqlCommand("kabsu.DeleteRecord", connection)) //Initializes command to the DeleteRecord stored procedure
                         {
                             command.CommandType = CommandType.StoredProcedure;
 
                             //Add the animal ID as an input for the procedure.
                             command.Parameters.AddWithValue("@ID", searchResult.Code);
+                            command.Parameters.AddWithValue("@Can", searchResult.CanNum);
+                            command.Parameters.AddWithValue("@Date", searchResult.CollDate);
 
                             connection.Open();
                             int k = command.ExecuteNonQuery(); //Executes the procedure
@@ -235,6 +234,8 @@ namespace WpfApp
                                 else
                                     command.Parameters.AddWithValue("@Balance", 0);
                                 command.Parameters.AddWithValue("@AnimalID", r.AnimalId);
+                                command.Parameters.AddWithValue("@Can", r.CanNum);
+                                command.Parameters.AddWithValue("@CollDate", r.CollDate);
 
                                 connection.Open();
                                 int k = command.ExecuteNonQuery(); //Executes the procedure
@@ -276,6 +277,8 @@ namespace WpfApp
                             command.Parameters.AddWithValue("@Code", Convert.ToInt32(morph.Code));
                             command.Parameters.AddWithValue("@Units", Convert.ToInt32(uxMorphUnits.Text));
                             command.Parameters.AddWithValue("@ID", morph.Id);
+                            command.Parameters.AddWithValue("@Can", searchResult.CanNum);
+                            command.Parameters.AddWithValue("@CollDate", searchResult.CollDate);
 
                             connection.Open();
                             int k = command.ExecuteNonQuery(); //Executes the procedure
@@ -284,7 +287,7 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+                catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
                 {
                     throw new InvalidOperationException();
                 }
@@ -347,17 +350,17 @@ namespace WpfApp
                             //Add variables from the record card as inputs for the procedure.
                             command.Parameters.AddWithValue("@SValid", info.Valid.ToString().ToUpper());
                             command.Parameters.AddWithValue("@SCanNum", uxCanNum.Text);
-                            command.Parameters.AddWithValue("@OldAnimalID", oldCode);
+                            command.Parameters.AddWithValue("@OldAnimalID", searchResult.Code);
                             command.Parameters.AddWithValue("@AAnimalID", uxCode.Text);
                             command.Parameters.AddWithValue("@SCollDate", uxMorphDate.Text);
                             command.Parameters.AddWithValue("@SNumUnits", uxMorphUnits.Text);
                             command.Parameters.AddWithValue("@PCity", info.City);
-                            command.Parameters.AddWithValue("@OldCity", oldCity);
+                            command.Parameters.AddWithValue("@OldCity", searchResult.Town);
                             command.Parameters.AddWithValue("@PState", info.State);
-                            command.Parameters.AddWithValue("@OldState", oldState);
+                            command.Parameters.AddWithValue("@OldState", searchResult.State);
                             command.Parameters.AddWithValue("@PCountry", info.Country);
                             command.Parameters.AddWithValue("@POwner", uxOwner.Text);
-                            command.Parameters.AddWithValue("@OldOwner", oldOwner);
+                            command.Parameters.AddWithValue("@OldOwner", searchResult.Owner);
                             command.Parameters.AddWithValue("@AAnimalName", uxAnimalName.Text);
                             command.Parameters.AddWithValue("@ABreed", uxBreed.Text);
                             command.Parameters.AddWithValue("@ASpecies", info.Species);
@@ -395,6 +398,8 @@ namespace WpfApp
 
                         //Add the ID as an input for the procedure.
                         command.Parameters.AddWithValue("@AnimalID", id);
+                        command.Parameters.AddWithValue("@Can", searchResult.CanNum);
+                        command.Parameters.AddWithValue("@CollDate", searchResult.CollDate);
                         connection.Open();
 
                         var reader = command.ExecuteReader(); //Executes a procedure with a reader returning existing record rows
@@ -408,7 +413,7 @@ namespace WpfApp
                                reader.GetString(reader.GetOrdinal("Date")),
                                reader.GetInt32(reader.GetOrdinal("NumReceived")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("NumShipped")).ToString(),
-                               reader.GetInt32(reader.GetOrdinal("Balance")).ToString(), id);
+                               reader.GetInt32(reader.GetOrdinal("Balance")).ToString(), id, searchResult.CanNum, searchResult.CollDate);
                             recordList.Add(record); //Add the record to the record list
                         }
                         connection.Close();
@@ -440,6 +445,8 @@ namespace WpfApp
 
                         //Add the ID as an input for the procedure.
                         command.Parameters.AddWithValue("@AnimalID", id);
+                        command.Parameters.AddWithValue("@Can", searchResult.CanNum);
+                        command.Parameters.AddWithValue("@CollDate", searchResult.CollDate);
                         connection.Open();
 
                         var reader = command.ExecuteReader(); //Executes a procedure with a reader returning existing record rows
@@ -454,7 +461,7 @@ namespace WpfApp
                                reader.GetInt32(reader.GetOrdinal("Mot")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("Morph")).ToString(),
                                reader.GetInt32(reader.GetOrdinal("Code")).ToString(),
-                               reader.GetInt32(reader.GetOrdinal("Units")).ToString(), id);
+                               reader.GetInt32(reader.GetOrdinal("Units")).ToString(), id, searchResult.CanNum, searchResult.CollDate);
                             if (morph.Notes != null) //if notes exist, populate private notes string
                                 notes = morph.Notes;
                             isMorph = true;
@@ -576,29 +583,32 @@ namespace WpfApp
         /// </summary>
         private void SortListByDate()
         {
-            for(int i = 0; i < recordList.Count; i++)
+            if (recordList != null)
             {
-                //Replace various other formats
-                if (recordList[i].Date[2] == '-' || recordList[i].Date[1] == '-')
-                    recordList[i].Date.Replace('-', '/');
-                if (recordList[i].Date[2] == '\\' || recordList[i].Date[1] == '\\')
-                    recordList[i].Date.Replace('\\', '/');
-
-                //Don't try to sort if the date is in an invalid format
-                if (recordList[i].Date[2] != '/' && recordList[i].Date[1] != '/')
-                    return;
-                string[] recordSplit = recordList[i].Date.Split('/');
-                for (int j = 0; j < recordList.Count; j++) //if the date is earlier than the later parts of the list
+                for (int i = 0; i < recordList.Count; i++)
                 {
-                    string[] oldRecordSplit = recordList[j].Date.Split('/');
-                    if (Convert.ToInt32(recordSplit[1]) <= Convert.ToInt32(oldRecordSplit[1]) && 
-                        Convert.ToInt32(recordSplit[0]) <= Convert.ToInt32(oldRecordSplit[0]) && 
-                        Convert.ToInt32(recordSplit[2]) <= Convert.ToInt32(oldRecordSplit[2]))
+                    //Replace various other formats
+                    if (recordList[i].Date[2] == '-' || recordList[i].Date[1] == '-')
+                        recordList[i].Date.Replace('-', '/');
+                    if (recordList[i].Date[2] == '\\' || recordList[i].Date[1] == '\\')
+                        recordList[i].Date.Replace('\\', '/');
+
+                    //Don't try to sort if the date is in an invalid format
+                    if (recordList[i].Date[2] != '/' && recordList[i].Date[1] != '/')
+                        return;
+                    string[] recordSplit = recordList[i].Date.Split('/');
+                    for (int j = 0; j < recordList.Count; j++) //if the date is earlier than the later parts of the list
                     {
-                        ExchangeRecord(recordList, i, j); //exchange the places of the two records
-                        //re-initialize split records
-                        recordSplit = recordList[i].Date.Split('/');
-                        oldRecordSplit = recordList[j].Date.Split('/');
+                        string[] oldRecordSplit = recordList[j].Date.Split('/');
+                        if (Convert.ToInt32(recordSplit[1]) <= Convert.ToInt32(oldRecordSplit[1]) &&
+                            Convert.ToInt32(recordSplit[0]) <= Convert.ToInt32(oldRecordSplit[0]) &&
+                            Convert.ToInt32(recordSplit[2]) <= Convert.ToInt32(oldRecordSplit[2]))
+                        {
+                            ExchangeRecord(recordList, i, j); //exchange the places of the two records
+                                                              //re-initialize split records
+                            recordSplit = recordList[i].Date.Split('/');
+                            oldRecordSplit = recordList[j].Date.Split('/');
+                        }
                     }
                 }
             }
