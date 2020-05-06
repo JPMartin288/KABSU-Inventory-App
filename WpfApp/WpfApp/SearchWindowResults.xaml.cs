@@ -179,5 +179,10 @@ namespace WpfApp
                 MessageBox.Show("Please select a result to delete from the database.");
             }
         }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            RetrieveAndRefreshResults();
+        }
     }
 }

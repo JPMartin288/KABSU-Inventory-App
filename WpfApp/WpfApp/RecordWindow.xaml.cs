@@ -91,7 +91,7 @@ namespace WpfApp
                 recordList = RetrieveRecords(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing specific record entries
                 morph = RetrieveMorph(searchResult.Code, CONNECTION_STRING); //populates the record card with any existing morphology info
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 ShowErrorMessage();
             }
@@ -106,15 +106,8 @@ namespace WpfApp
         {
             CollectAdditionalInfo(); //Opens the additional info window
 
+            SortListByDate(); //if possible, sort records by oldest record first
             this.IsEnabled = false;
-            try
-            {
-                StoreParent(CONNECTION_STRING);
-            }
-            catch (InvalidOperationException)
-            {
-                ShowErrorMessage();
-            }
             List<string> list = new List<string>();
             List<string> morphList = new List<string>();
             int textCount = 0;
@@ -146,17 +139,32 @@ namespace WpfApp
                         textCount--;
                 }
             }
+
+            if (!CheckBalance())
+            {
+                ReplaceBalance();
+            }
+            try
+            {
+                StoreParent(CONNECTION_STRING);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ShowErrorMessage();
+            }
+
             if (isMorph) //if morphology info exists
             {
                 //create new morphology object
                 morph = new Morph(notes, list[MORPH_ID], list[MORPH_ID + 1], list[MORPH_ID + 2], list[MORPH_ID + 3], list[MORPH_ID + 4], list[MORPH_ID + 5], list[ID_INDEX], list[CAN_INDEX], list[DATE_INDEX]);
             }
+
             try
             {
                 StoreRecords(CONNECTION_STRING); //store the record list into the database
                 StoreMorph(CONNECTION_STRING); //store the morphology info into the database
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 ShowErrorMessage();
             }
@@ -254,9 +262,9 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+                catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException(ex.ToString());
                 }
             }
         }
@@ -280,11 +288,22 @@ namespace WpfApp
                             //Add variables from the record object as inputs for the procedure.
                             command.Parameters.AddWithValue("@Notes", morph.Notes);
                             command.Parameters.AddWithValue("@Date", uxMorphDate.Text);
+                            if (morph.Vigor == "")
+                                morph.Vigor = "0";
                             command.Parameters.AddWithValue("@Vigor", Convert.ToInt32(morph.Vigor));
+                            if (morph.Mot == "")
+                                morph.Mot = "0";
                             command.Parameters.AddWithValue("@Mot", Convert.ToInt32(morph.Mot));
+                            if (morph.Morphology == "")
+                                morph.Morphology = "0";
                             command.Parameters.AddWithValue("@Morph", Convert.ToInt32(morph.Morphology));
+                            if (morph.Code == "")
+                                morph.Code = "0";
                             command.Parameters.AddWithValue("@Code", Convert.ToInt32(morph.Code));
-                            command.Parameters.AddWithValue("@Units", Convert.ToInt32(uxMorphUnits.Text));
+                            if (uxMorphUnits.Text != "")
+                                command.Parameters.AddWithValue("@Units", Convert.ToInt32(uxMorphUnits.Text));
+                            else
+                                command.Parameters.AddWithValue("@Units", 0);
                             command.Parameters.AddWithValue("@ID", morph.Id);
                             command.Parameters.AddWithValue("@Can", searchResult.CanNum);
                             command.Parameters.AddWithValue("@CollDate", searchResult.CollDate);
@@ -296,9 +315,9 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+                catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException(ex.ToString());
                 }
             }
         }
@@ -341,9 +360,9 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+                catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException(ex.ToString());
                 }
             }
             else
@@ -382,9 +401,9 @@ namespace WpfApp
 
                     }
                 }
-                catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+                catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException(ex.ToString());
                 }
             }
         }
@@ -430,9 +449,9 @@ namespace WpfApp
                     }
                 }
             }
-            catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+            catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(ex.ToString());
             }
         }
 
@@ -482,9 +501,9 @@ namespace WpfApp
                     }
                 }
             }
-            catch (Exception) //Catches any SQL Exceptions and throws to the caller.
+            catch (Exception ex) //Catches any SQL Exceptions and throws to the caller.
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(ex.ToString());
             }
         }
 
@@ -564,6 +583,12 @@ namespace WpfApp
             bool isCorrectBalance = true;
             foreach(Record r in recordList)
             {
+                if (r.Ship == "")
+                    r.Ship = "0";
+                if (r.Rec == "")
+                    r.Rec = "0";
+                if (r.Balance == "")
+                    r.Balance = "0";
                 expectedBalance -= Convert.ToInt32(r.Ship);
                 expectedBalance += Convert.ToInt32(r.Rec);
                 if (expectedBalance != Convert.ToInt32(r.Balance))
@@ -584,6 +609,7 @@ namespace WpfApp
                     editedRows++;
                 r.Balance = expectedBalance.ToString();
             }
+            uxMorphUnits.Text = expectedBalance.ToString();
             return editedRows;
         }
 
