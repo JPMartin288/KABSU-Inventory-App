@@ -182,17 +182,29 @@ namespace WpfApp
             Activated += Window_Activated;
         }
 
+        /// <summary>
+        /// Event handler for when the window is refocused on. Our customers would like for the results to auto-refresh,
+        /// although that might get labor-intensive on the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Activated(object sender, EventArgs e)
         {
             RetrieveAndRefreshResults();
         }
 
+        /// <summary>
+        /// Event handler on clicking the "Show Total Units" button. takes the selected rows, and shows the sum of
+        /// their unit fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SumButton_Click(object sender, RoutedEventArgs e)
         {
             int sum = 0;
-            if (uxSearchResults.SelectedItem != null)
+            if (uxSearchResults.SelectedItem != null) //if at least 1 row is selected
             {
-                foreach (object o in uxSearchResults.SelectedItems)
+                foreach (object o in uxSearchResults.SelectedItems) // for all selected rows
                 {
                     SearchResult result = (SearchResult)o;
                     if (result.Units != "")
