@@ -186,5 +186,20 @@ namespace WpfApp
         {
             RetrieveAndRefreshResults();
         }
+
+        private void SumButton_Click(object sender, RoutedEventArgs e)
+        {
+            int sum = 0;
+            if (uxSearchResults.SelectedItem != null)
+            {
+                foreach (object o in uxSearchResults.SelectedItems)
+                {
+                    SearchResult result = (SearchResult)o;
+                    if (result.Units != "")
+                        sum += Convert.ToInt32(result.Units);
+                }
+            }
+            MessageBox.Show("Unit sum of rows selected: " + sum);
+        }
     }
 }

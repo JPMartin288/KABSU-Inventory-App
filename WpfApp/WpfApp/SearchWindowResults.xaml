@@ -30,6 +30,7 @@
         </DataGrid>
         <Button x:Name="uxRefreshButton" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,552,0,0" Click="UxRefreshButton_Click"/>
         <Button x:Name="DeleteButton" Content="Delete Selected Result" HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" Margin="819,552,0,0" Click="DeleteButton_Click"/>
+        <Button x:Name="SumButton" Content="Show Total Units" HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" Margin="90,552,0,0" Click="SumButton_Click"/>
 
     </Grid>
 </Window>
