@@ -42,6 +42,8 @@ namespace WpfApp
         /// <param name="searchTerm">A collection of search terms to search with</param>
         public SearchWindowResults(List<SearchResult> results, SearchTerm searchTerm)
         {
+            //Uncomment Line below to use one-time database excel file insertion. Triggers on search, takes A LONG TIME, close and re-comment directly after search.
+            //DataLoad.DatabaseLoad();
             this.searchTerm = searchTerm;
             InitializeComponent();
             uxSearchResults.ItemsSource = results; //initializes the data grid's context to be the search results
