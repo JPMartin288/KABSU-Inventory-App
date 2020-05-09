@@ -105,7 +105,6 @@ namespace WpfApp
         private void RecordWindow_Closing(object sender, CancelEventArgs e)
         {
             CollectAdditionalInfo(); //Opens the additional info window
-
             SortListByDate(); //if possible, sort records by oldest record first
             this.IsEnabled = false;
             List<string> list = new List<string>();
@@ -161,7 +160,7 @@ namespace WpfApp
 
             try
             {
-                StoreRecords(CONNECTION_STRING); //store the record list into the database
+                StoreRecords(list[ID_INDEX], list[CAN_INDEX], list[DATE_INDEX],CONNECTION_STRING); //store the record list into the database
                 StoreMorph(CONNECTION_STRING); //store the morphology info into the database
             }
             catch (InvalidOperationException ex)
@@ -207,7 +206,7 @@ namespace WpfApp
         /// Method which inserts a list of Record objects into the database after deleting existing records
         /// </summary>
         /// <param name="connectionString">The connection string of the current database location</param>
-        private void StoreRecords(string connectionString)
+        private void StoreRecords(string id,string can,string date,string connectionString)
         {
             if (recordList != null)
             {
@@ -220,9 +219,9 @@ namespace WpfApp
                             command.CommandType = CommandType.StoredProcedure;
 
                             //Add the animal ID as an input for the procedure.
-                            command.Parameters.AddWithValue("@ID", searchResult.Code);
-                            command.Parameters.AddWithValue("@Can", searchResult.CanNum);
-                            command.Parameters.AddWithValue("@Date", searchResult.CollDate);
+                            command.Parameters.AddWithValue("@ID", id);
+                            command.Parameters.AddWithValue("@Can", can);
+                            command.Parameters.AddWithValue("@Date", date);
 
                             connection.Open();
                             int k = command.ExecuteNonQuery(); //Executes the procedure
@@ -305,8 +304,8 @@ namespace WpfApp
                             else
                                 command.Parameters.AddWithValue("@Units", 0);
                             command.Parameters.AddWithValue("@ID", morph.Id);
-                            command.Parameters.AddWithValue("@Can", searchResult.CanNum);
-                            command.Parameters.AddWithValue("@CollDate", searchResult.CollDate);
+                            command.Parameters.AddWithValue("@Can", morph.CanNum);
+                            command.Parameters.AddWithValue("@CollDate", morph.CollDate);
 
                             connection.Open();
                             int k = command.ExecuteNonQuery(); //Executes the procedure
@@ -581,18 +580,21 @@ namespace WpfApp
         {
             int expectedBalance = 0;
             bool isCorrectBalance = true;
-            foreach(Record r in recordList)
+            if (recordList != null)
             {
-                if (r.Ship == "")
-                    r.Ship = "0";
-                if (r.Rec == "")
-                    r.Rec = "0";
-                if (r.Balance == "")
-                    r.Balance = "0";
-                expectedBalance -= Convert.ToInt32(r.Ship);
-                expectedBalance += Convert.ToInt32(r.Rec);
-                if (expectedBalance != Convert.ToInt32(r.Balance))
-                    isCorrectBalance = false;
+                foreach (Record r in recordList)
+                {
+                    if (r.Ship == "")
+                        r.Ship = "0";
+                    if (r.Rec == "")
+                        r.Rec = "0";
+                    if (r.Balance == "")
+                        r.Balance = "0";
+                    expectedBalance -= Convert.ToInt32(r.Ship);
+                    expectedBalance += Convert.ToInt32(r.Rec);
+                    if (expectedBalance != Convert.ToInt32(r.Balance))
+                        isCorrectBalance = false;
+                }
             }
             return isCorrectBalance;
         }
@@ -601,13 +603,16 @@ namespace WpfApp
         {
             int expectedBalance = 0;
             int editedRows = 0;
-            foreach (Record r in recordList)
+            if (recordList != null)
             {
-                expectedBalance -= Convert.ToInt32(r.Ship);
-                expectedBalance += Convert.ToInt32(r.Rec);
-                if (Convert.ToInt32(r.Balance) != expectedBalance)
-                    editedRows++;
-                r.Balance = expectedBalance.ToString();
+                foreach (Record r in recordList)
+                {
+                    expectedBalance -= Convert.ToInt32(r.Ship);
+                    expectedBalance += Convert.ToInt32(r.Rec);
+                    if (Convert.ToInt32(r.Balance) != expectedBalance)
+                        editedRows++;
+                    r.Balance = expectedBalance.ToString();
+                }
             }
             uxMorphUnits.Text = expectedBalance.ToString();
             return editedRows;
