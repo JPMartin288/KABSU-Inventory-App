@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Search Results" Height="623" Width="1017.6" ResizeMode="CanMinimize" Activated="Window_Activated">
+        Title="Search Results" Height="623" Width="1017.6" ResizeMode="CanMinimize">
+    <!--Activated="Window_Activated"-->
     <Grid>
         <DataGrid x:Name="uxSearchResults" ItemsSource="{Binding SearchResult}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="537" VerticalAlignment="Top" Width="982" MaxWidth="982" Margin="10,10,0,0">
             <DataGrid.Columns>
@@ -29,6 +30,7 @@
         </DataGrid>
         <Button x:Name="uxRefreshButton" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,552,0,0" Click="UxRefreshButton_Click"/>
         <Button x:Name="DeleteButton" Content="Delete Selected Result" HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" Margin="819,552,0,0" Click="DeleteButton_Click"/>
+        <Button x:Name="SumButton" Content="Show Total Units" HorizontalAlignment="Left" VerticalAlignment="Top" Width="173" Margin="90,552,0,0" Click="SumButton_Click"/>
 
     </Grid>
 </Window>
