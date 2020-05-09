@@ -32,26 +32,7 @@ namespace KABSUUITests
             this.UIMap.OpenaRecordFromSearchResult();
 
         }
-        /// <summary>
-        /// This test will look for the record to check if the added information were saved correcrtly.
-        /// The editdet fields that are expected to show now are: "To or From" : TEST1
-        ///                                                       "Date" : 05/07/2020
-        ///                                                       "NO. REC" : 0
-        ///                                                       "NO. SHIP" : 0
-        ///                                                       "BAL" : 1
-        ///                                                       "Species" : TEST
-        ///                                                       "City" : Manhattan
-        ///                                                       "State" : KS
-        ///                                                       "Country" : USA
-        ///                                                       "INV" is set to TRUE
-        /// </summary>
-        [TestMethod]
-        public void CodedUITestMethod2()
-        {
-
-            this.UIMap.VerifyEditingWasSuccesful();
-
-        }
+        
 
         #region Additional test attributes
 

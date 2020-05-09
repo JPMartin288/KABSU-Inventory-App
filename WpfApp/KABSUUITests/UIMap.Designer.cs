@@ -758,6 +758,95 @@ namespace KABSUUITests
             Mouse.Click(uIOKButton, new Point(48, 13));
         }
         
+        /// <summary>
+        /// To test the adding a record functionality
+        /// </summary>
+        public void AddingRecord()
+        {
+            #region Variable Declarations
+            WpfButton uIAddNewRecordButton = this.UIDatabaseAppWindow.UIAddNewRecordButton;
+            WpfEdit uIUxCanNumEdit = this.UIRecordWindowWindow1.UIUxCanNumEdit;
+            WpfEdit uIUxCodeEdit = this.UIRecordWindowWindow1.UIUxCodeEdit;
+            WpfEdit uIUxBreedEdit = this.UIRecordWindowWindow1.UIUxBreedEdit;
+            WpfEdit uIUxAnimalNameEdit = this.UIRecordWindowWindow1.UIUxAnimalNameEdit;
+            WpfEdit uIUxRegNumEdit = this.UIRecordWindowWindow1.UIUxRegNumEdit;
+            WpfEdit uIUxOwnerEdit = this.UIRecordWindowWindow1.UIUxOwnerEdit;
+            WpfEdit uIUxMorphDateEdit = this.UIRecordWindowWindow1.UIUxMorphDateEdit;
+            WpfEdit uIUxVigorEdit = this.UIRecordWindowWindow1.UIUxVigorEdit;
+            WpfEdit uIUxMotEdit = this.UIRecordWindowWindow1.UIUxMotEdit;
+            WpfEdit uIUxMorphEdit = this.UIRecordWindowWindow1.UIUxMorphEdit;
+            WpfEdit uIUxMorphCodeEdit = this.UIRecordWindowWindow1.UIUxMorphCodeEdit;
+            WpfEdit uIUxMorphUnitsEdit = this.UIRecordWindowWindow1.UIUxMorphUnitsEdit;
+            WpfEdit uIUxToFromLeft1Edit = this.UIRecordWindowWindow1.UIUxToFromLeft1Edit;
+            WpfEdit uIUxDateLeft1Edit = this.UIRecordWindowWindow1.UIUxDateLeft1Edit;
+            WpfEdit uIUxRecLeft1Edit = this.UIRecordWindowWindow1.UIUxRecLeft1Edit;
+            WpfEdit uIUxShipLeft1Edit = this.UIRecordWindowWindow1.UIUxShipLeft1Edit;
+            WpfEdit uIUxBalLeft1Edit = this.UIRecordWindowWindow1.UIUxBalLeft1Edit;
+            WinButton uICloseButton = this.UIRecordWindowWindow.UICloseButton;
+            WinButton uICloseButton1 = this.UIAdditionalInfoWindow.UICloseButton;
+            #endregion
+
+            // Click 'Add New Record' button
+            Mouse.Click(uIAddNewRecordButton, new Point(73, 22));
+
+            // Type '1234' in 'uxCanNum' text box
+            uIUxCanNumEdit.Text = this.AddingRecordParams.UIUxCanNumEditText;
+
+            // Type '123456' in 'uxCode' text box
+            uIUxCodeEdit.Text = this.AddingRecordParams.UIUxCodeEditText;
+
+            // Type 'Cross' in 'uxBreed' text box
+            uIUxBreedEdit.Text = this.AddingRecordParams.UIUxBreedEditText;
+
+            // Type 'TESTANIMAL' in 'uxAnimalName' text box
+            uIUxAnimalNameEdit.Text = this.AddingRecordParams.UIUxAnimalNameEditText;
+
+            // Click 'uxRegNum' text box
+            Mouse.Click(uIUxRegNumEdit, new Point(115, 18));
+
+            // Type 'TESTOWNER' in 'uxOwner' text box
+            uIUxOwnerEdit.Text = this.AddingRecordParams.UIUxOwnerEditText;
+
+            // Type '05/09/2020' in 'uxMorphDate' text box
+            uIUxMorphDateEdit.Text = this.AddingRecordParams.UIUxMorphDateEditText;
+
+            // Type '1' in 'uxVigor' text box
+            uIUxVigorEdit.Text = this.AddingRecordParams.UIUxVigorEditText;
+
+            // Type '2' in 'uxMot' text box
+            uIUxMotEdit.Text = this.AddingRecordParams.UIUxMotEditText;
+
+            // Type '8' in 'uxMorph' text box
+            uIUxMorphEdit.Text = this.AddingRecordParams.UIUxMorphEditText;
+
+            // Type '165' in 'uxMorphCode' text box
+            uIUxMorphCodeEdit.Text = this.AddingRecordParams.UIUxMorphCodeEditText;
+
+            // Type '10' in 'uxMorphUnits' text box
+            uIUxMorphUnitsEdit.Text = this.AddingRecordParams.UIUxMorphUnitsEditText;
+
+            // Type 'KABSUTEST' in 'uxToFromLeft1' text box
+            uIUxToFromLeft1Edit.Text = this.AddingRecordParams.UIUxToFromLeft1EditText;
+
+            // Type '05/09/2020' in 'uxDateLeft1' text box
+            uIUxDateLeft1Edit.Text = this.AddingRecordParams.UIUxDateLeft1EditText;
+
+            // Type '1' in 'uxRecLeft1' text box
+            uIUxRecLeft1Edit.Text = this.AddingRecordParams.UIUxRecLeft1EditText;
+
+            // Type '2' in 'uxShipLeft1' text box
+            uIUxShipLeft1Edit.Text = this.AddingRecordParams.UIUxShipLeft1EditText;
+
+            // Type '3' in 'uxBalLeft1' text box
+            uIUxBalLeft1Edit.Text = this.AddingRecordParams.UIUxBalLeft1EditText;
+
+            // Click 'Close' button
+            Mouse.Click(uICloseButton, new Point(21, 27));
+
+            // Click 'Close' button
+            Mouse.Click(uICloseButton1, new Point(31, 17));
+        }
+        
         #region Properties
         public virtual SearchingByOwnerParams SearchingByOwnerParams
         {
@@ -1011,6 +1100,18 @@ namespace KABSUUITests
             }
         }
         
+        public virtual AddingRecordParams AddingRecordParams
+        {
+            get
+            {
+                if ((this.mAddingRecordParams == null))
+                {
+                    this.mAddingRecordParams = new AddingRecordParams();
+                }
+                return this.mAddingRecordParams;
+            }
+        }
+        
         public UIDatabaseAppWindow UIDatabaseAppWindow
         {
             get
@@ -1094,6 +1195,18 @@ namespace KABSUUITests
                 return this.mUIOKWindow;
             }
         }
+        
+        public UIRecordWindowWindow1 UIRecordWindowWindow1
+        {
+            get
+            {
+                if ((this.mUIRecordWindowWindow1 == null))
+                {
+                    this.mUIRecordWindowWindow1 = new UIRecordWindowWindow1();
+                }
+                return this.mUIRecordWindowWindow1;
+            }
+        }
         #endregion
         
         #region Fields
@@ -1139,6 +1252,8 @@ namespace KABSUUITests
         
         private NotSureAboutThisParams mNotSureAboutThisParams;
         
+        private AddingRecordParams mAddingRecordParams;
+        
         private UIDatabaseAppWindow mUIDatabaseAppWindow;
         
         private UISearchWindow mUISearchWindow;
@@ -1152,6 +1267,8 @@ namespace KABSUUITests
         private UIAdditionalInfoWindow mUIAdditionalInfoWindow;
         
         private UIOKWindow mUIOKWindow;
+        
+        private UIRecordWindowWindow1 mUIRecordWindowWindow1;
         #endregion
     }
     
@@ -1645,6 +1762,96 @@ namespace KABSUUITests
         #endregion
     }
     
+    /// <summary>
+    /// Parameters to be passed into 'AddingRecord'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "16.0.29514.35")]
+    public class AddingRecordParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Type '1234' in 'uxCanNum' text box
+        /// </summary>
+        public string UIUxCanNumEditText = "1234";
+        
+        /// <summary>
+        /// Type '123456' in 'uxCode' text box
+        /// </summary>
+        public string UIUxCodeEditText = "123456";
+        
+        /// <summary>
+        /// Type 'Cross' in 'uxBreed' text box
+        /// </summary>
+        public string UIUxBreedEditText = "Cross";
+        
+        /// <summary>
+        /// Type 'TESTANIMAL' in 'uxAnimalName' text box
+        /// </summary>
+        public string UIUxAnimalNameEditText = "TESTANIMAL";
+        
+        /// <summary>
+        /// Type 'TESTOWNER' in 'uxOwner' text box
+        /// </summary>
+        public string UIUxOwnerEditText = "TESTOWNER";
+        
+        /// <summary>
+        /// Type '05/09/2020' in 'uxMorphDate' text box
+        /// </summary>
+        public string UIUxMorphDateEditText = "05/09/2020";
+        
+        /// <summary>
+        /// Type '1' in 'uxVigor' text box
+        /// </summary>
+        public string UIUxVigorEditText = "1";
+        
+        /// <summary>
+        /// Type '2' in 'uxMot' text box
+        /// </summary>
+        public string UIUxMotEditText = "2";
+        
+        /// <summary>
+        /// Type '8' in 'uxMorph' text box
+        /// </summary>
+        public string UIUxMorphEditText = "8";
+        
+        /// <summary>
+        /// Type '165' in 'uxMorphCode' text box
+        /// </summary>
+        public string UIUxMorphCodeEditText = "165";
+        
+        /// <summary>
+        /// Type '10' in 'uxMorphUnits' text box
+        /// </summary>
+        public string UIUxMorphUnitsEditText = "10";
+        
+        /// <summary>
+        /// Type 'KABSUTEST' in 'uxToFromLeft1' text box
+        /// </summary>
+        public string UIUxToFromLeft1EditText = "KABSUTEST";
+        
+        /// <summary>
+        /// Type '05/09/2020' in 'uxDateLeft1' text box
+        /// </summary>
+        public string UIUxDateLeft1EditText = "05/09/2020";
+        
+        /// <summary>
+        /// Type '1' in 'uxRecLeft1' text box
+        /// </summary>
+        public string UIUxRecLeft1EditText = "1";
+        
+        /// <summary>
+        /// Type '2' in 'uxShipLeft1' text box
+        /// </summary>
+        public string UIUxShipLeft1EditText = "2";
+        
+        /// <summary>
+        /// Type '3' in 'uxBalLeft1' text box
+        /// </summary>
+        public string UIUxBalLeft1EditText = "3";
+        #endregion
+    }
+    
     [GeneratedCode("Coded UITest Builder", "16.0.29514.35")]
     public class UIDatabaseAppWindow : WpfWindow
     {
@@ -1690,12 +1897,30 @@ namespace KABSUUITests
                 return this.mUIWpfWindow;
             }
         }
+        
+        public WpfButton UIAddNewRecordButton
+        {
+            get
+            {
+                if ((this.mUIAddNewRecordButton == null))
+                {
+                    this.mUIAddNewRecordButton = new WpfButton(this);
+                    #region Search Criteria
+                    this.mUIAddNewRecordButton.SearchProperties[WpfButton.PropertyNames.AutomationId] = "uxAddRecord";
+                    this.mUIAddNewRecordButton.WindowTitles.Add("Database App");
+                    #endregion
+                }
+                return this.mUIAddNewRecordButton;
+            }
+        }
         #endregion
         
         #region Fields
         private WpfButton mUIModifyRecordButton;
         
         private WpfWindow mUIWpfWindow;
+        
+        private WpfButton mUIAddNewRecordButton;
         #endregion
     }
     
@@ -2092,6 +2317,330 @@ namespace KABSUUITests
         
         #region Fields
         private WinButton mUIOKButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "16.0.29514.35")]
+    public class UIRecordWindowWindow1 : WpfWindow
+    {
+        
+        public UIRecordWindowWindow1()
+        {
+            #region Search Criteria
+            this.SearchProperties[WpfWindow.PropertyNames.Name] = "Record Window";
+            this.SearchProperties.Add(new PropertyExpression(WpfWindow.PropertyNames.ClassName, "HwndWrapper", PropertyExpressionOperator.Contains));
+            this.WindowTitles.Add("Record Window");
+            #endregion
+        }
+        
+        #region Properties
+        public WpfEdit UIUxCanNumEdit
+        {
+            get
+            {
+                if ((this.mUIUxCanNumEdit == null))
+                {
+                    this.mUIUxCanNumEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxCanNumEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxCanNum";
+                    this.mUIUxCanNumEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxCanNumEdit;
+            }
+        }
+        
+        public WpfEdit UIUxCodeEdit
+        {
+            get
+            {
+                if ((this.mUIUxCodeEdit == null))
+                {
+                    this.mUIUxCodeEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxCodeEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxCode";
+                    this.mUIUxCodeEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxCodeEdit;
+            }
+        }
+        
+        public WpfEdit UIUxBreedEdit
+        {
+            get
+            {
+                if ((this.mUIUxBreedEdit == null))
+                {
+                    this.mUIUxBreedEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxBreedEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxBreed";
+                    this.mUIUxBreedEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxBreedEdit;
+            }
+        }
+        
+        public WpfEdit UIUxAnimalNameEdit
+        {
+            get
+            {
+                if ((this.mUIUxAnimalNameEdit == null))
+                {
+                    this.mUIUxAnimalNameEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxAnimalNameEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxAnimalName";
+                    this.mUIUxAnimalNameEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxAnimalNameEdit;
+            }
+        }
+        
+        public WpfEdit UIUxRegNumEdit
+        {
+            get
+            {
+                if ((this.mUIUxRegNumEdit == null))
+                {
+                    this.mUIUxRegNumEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxRegNumEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxRegNum";
+                    this.mUIUxRegNumEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxRegNumEdit;
+            }
+        }
+        
+        public WpfEdit UIUxOwnerEdit
+        {
+            get
+            {
+                if ((this.mUIUxOwnerEdit == null))
+                {
+                    this.mUIUxOwnerEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxOwnerEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxOwner";
+                    this.mUIUxOwnerEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxOwnerEdit;
+            }
+        }
+        
+        public WpfEdit UIUxMorphDateEdit
+        {
+            get
+            {
+                if ((this.mUIUxMorphDateEdit == null))
+                {
+                    this.mUIUxMorphDateEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxMorphDateEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxMorphDate";
+                    this.mUIUxMorphDateEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxMorphDateEdit;
+            }
+        }
+        
+        public WpfEdit UIUxVigorEdit
+        {
+            get
+            {
+                if ((this.mUIUxVigorEdit == null))
+                {
+                    this.mUIUxVigorEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxVigorEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxVigor";
+                    this.mUIUxVigorEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxVigorEdit;
+            }
+        }
+        
+        public WpfEdit UIUxMotEdit
+        {
+            get
+            {
+                if ((this.mUIUxMotEdit == null))
+                {
+                    this.mUIUxMotEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxMotEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxMot";
+                    this.mUIUxMotEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxMotEdit;
+            }
+        }
+        
+        public WpfEdit UIUxMorphEdit
+        {
+            get
+            {
+                if ((this.mUIUxMorphEdit == null))
+                {
+                    this.mUIUxMorphEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxMorphEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxMorph";
+                    this.mUIUxMorphEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxMorphEdit;
+            }
+        }
+        
+        public WpfEdit UIUxMorphCodeEdit
+        {
+            get
+            {
+                if ((this.mUIUxMorphCodeEdit == null))
+                {
+                    this.mUIUxMorphCodeEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxMorphCodeEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxMorphCode";
+                    this.mUIUxMorphCodeEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxMorphCodeEdit;
+            }
+        }
+        
+        public WpfEdit UIUxMorphUnitsEdit
+        {
+            get
+            {
+                if ((this.mUIUxMorphUnitsEdit == null))
+                {
+                    this.mUIUxMorphUnitsEdit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxMorphUnitsEdit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxMorphUnits";
+                    this.mUIUxMorphUnitsEdit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxMorphUnitsEdit;
+            }
+        }
+        
+        public WpfEdit UIUxToFromLeft1Edit
+        {
+            get
+            {
+                if ((this.mUIUxToFromLeft1Edit == null))
+                {
+                    this.mUIUxToFromLeft1Edit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxToFromLeft1Edit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxToFromLeft1";
+                    this.mUIUxToFromLeft1Edit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxToFromLeft1Edit;
+            }
+        }
+        
+        public WpfEdit UIUxDateLeft1Edit
+        {
+            get
+            {
+                if ((this.mUIUxDateLeft1Edit == null))
+                {
+                    this.mUIUxDateLeft1Edit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxDateLeft1Edit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxDateLeft1";
+                    this.mUIUxDateLeft1Edit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxDateLeft1Edit;
+            }
+        }
+        
+        public WpfEdit UIUxRecLeft1Edit
+        {
+            get
+            {
+                if ((this.mUIUxRecLeft1Edit == null))
+                {
+                    this.mUIUxRecLeft1Edit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxRecLeft1Edit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxRecLeft1";
+                    this.mUIUxRecLeft1Edit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxRecLeft1Edit;
+            }
+        }
+        
+        public WpfEdit UIUxShipLeft1Edit
+        {
+            get
+            {
+                if ((this.mUIUxShipLeft1Edit == null))
+                {
+                    this.mUIUxShipLeft1Edit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxShipLeft1Edit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxShipLeft1";
+                    this.mUIUxShipLeft1Edit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxShipLeft1Edit;
+            }
+        }
+        
+        public WpfEdit UIUxBalLeft1Edit
+        {
+            get
+            {
+                if ((this.mUIUxBalLeft1Edit == null))
+                {
+                    this.mUIUxBalLeft1Edit = new WpfEdit(this);
+                    #region Search Criteria
+                    this.mUIUxBalLeft1Edit.SearchProperties[WpfEdit.PropertyNames.AutomationId] = "uxBalLeft1";
+                    this.mUIUxBalLeft1Edit.WindowTitles.Add("Record Window");
+                    #endregion
+                }
+                return this.mUIUxBalLeft1Edit;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WpfEdit mUIUxCanNumEdit;
+        
+        private WpfEdit mUIUxCodeEdit;
+        
+        private WpfEdit mUIUxBreedEdit;
+        
+        private WpfEdit mUIUxAnimalNameEdit;
+        
+        private WpfEdit mUIUxRegNumEdit;
+        
+        private WpfEdit mUIUxOwnerEdit;
+        
+        private WpfEdit mUIUxMorphDateEdit;
+        
+        private WpfEdit mUIUxVigorEdit;
+        
+        private WpfEdit mUIUxMotEdit;
+        
+        private WpfEdit mUIUxMorphEdit;
+        
+        private WpfEdit mUIUxMorphCodeEdit;
+        
+        private WpfEdit mUIUxMorphUnitsEdit;
+        
+        private WpfEdit mUIUxToFromLeft1Edit;
+        
+        private WpfEdit mUIUxDateLeft1Edit;
+        
+        private WpfEdit mUIUxRecLeft1Edit;
+        
+        private WpfEdit mUIUxShipLeft1Edit;
+        
+        private WpfEdit mUIUxBalLeft1Edit;
         #endregion
     }
 }
