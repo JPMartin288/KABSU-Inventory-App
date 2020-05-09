@@ -23,10 +23,10 @@ namespace KABSUUITests
         }
         /// <summary>
         /// This is to test the "Sum OF Units" function.
-        /// We will look for "Mouse" with the "Owner" filter, and click on "Sum Of Units" the expected result is 31 (number may vary depedning on new entries)
+        /// We will look for "Mouse" with the "Owner" filter, and click on "Sum Of Units" the expected result is 54 (number may vary depedning on new entries)
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestFilteredSumOfUnits()
         {
 
             this.UIMap.TestForSumOfUnits();
@@ -34,10 +34,10 @@ namespace KABSUUITests
         }
         /// <summary>
         /// This is to test to the total Sum Of Units without any filters or test in the search box.
-        /// The expected result is 213886 (number may vary depedning on new entries)
+        /// The expected result is 213972 (number may vary depedning on new entries)
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod2()
+        public void CodedUITestTotalSumOfUnits()
         {
 
             this.UIMap.TestForTotalSumOfUnits();

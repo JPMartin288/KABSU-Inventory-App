@@ -25,7 +25,7 @@ namespace KABSUUITests
         /// This is a test method to add a new record.
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestAddNewRecord()
         {
 
             this.UIMap.AddingRecord();

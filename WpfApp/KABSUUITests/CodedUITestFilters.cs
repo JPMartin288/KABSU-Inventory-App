@@ -28,7 +28,7 @@ namespace KABSUUITests
         /// This is a test to open the "Modify Record" window
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestOpenSearchWindow()
         {
             
             this.UIMap.OpeningModifyRecordWindow();
@@ -37,7 +37,7 @@ namespace KABSUUITests
         /// This is a test to use the "Owner" filter in search
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod2()
+        public void CodedUITestSearchByOwnerFilter()
         {
 
             this.UIMap.SearchByOwnerFilter();
@@ -47,7 +47,7 @@ namespace KABSUUITests
         /// This is a test to use the "Breed" filter in search
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod3()
+        public void CodedUITestSearchByBreedFilter()
         {
 
             this.UIMap.SearchByBreedFilter();
@@ -58,7 +58,7 @@ namespace KABSUUITests
         /// We will search for "Holy Smoker" as we know it exists
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod4()
+        public void CodedUITestSearchByAnimalNameFilter()
         {
 
             this.UIMap.SearchByAnimalNameFilter();
@@ -69,7 +69,7 @@ namespace KABSUUITests
         /// we will search for "countyo" as we know it exists 
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod5()
+        public void CodedUITestSearchByCodeFilter()
         {
 
             this.UIMap.SearchByCodeFilter();
@@ -80,7 +80,7 @@ namespace KABSUUITests
         /// we will search for "658" as we know it exists 
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod7()
+        public void CodedUITestSearchByCanFilter()
         {
 
             this.UIMap.SearchByCanFilter();
@@ -91,7 +91,7 @@ namespace KABSUUITests
         /// we will search for "Lemasa" as we know it exists 
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod8()
+        public void CodedUITestSearchByTownFilter()
         {
 
             this.UIMap.SearchByTownFilter();
@@ -102,7 +102,7 @@ namespace KABSUUITests
         /// we will search for "KS" as we know it exists 
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod9()
+        public void CodedUITestSearchByStateFilter()
         {
 
             this.UIMap.SearchByStateFilter();
@@ -113,7 +113,7 @@ namespace KABSUUITests
         /// we will search for "Mouse" in the owner filter and "Cross" in Breed filter as we know both exist.
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod10()
+        public void CodedUITestSearchByOwnerAndCross()
         {
 
             this.UIMap.SearchByOwnerAndCross();
@@ -124,7 +124,7 @@ namespace KABSUUITests
         /// we will search for "Mouse" in the owner filter and "Cross" in Breed filter and "Holy Smoker" in Animal Name as we know they exist.
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod11()
+        public void CodedUITestSearchByOwnerAndByBreedAndByAnimalName()
         {
 
             this.UIMap.SearchByOwnerAndByBreedAndByAnimalName();
@@ -135,7 +135,7 @@ namespace KABSUUITests
         /// we will search for "Mouse" in the owner filter and "Cross" in Breed filter and "Holy Smoker" in Animal Name and "54XB399" as we know they exist.
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod12()
+        public void CodedUITestSearchByOwnerAndByBreedAndByAnimalNameAndByCode()
         {
 
             this.UIMap.SearchByOwnerAndByBreedAndByAnimalNameAndByCode();

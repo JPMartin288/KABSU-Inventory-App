@@ -26,7 +26,7 @@ namespace KABSUUITests
         /// We will search for "Mouse" by "Owner" as we know it exists.
         /// </summary>
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestOpenRecordFromSearchResult()
         {
 
             this.UIMap.OpenaRecordFromSearchResult();
