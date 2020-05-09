@@ -23,7 +23,7 @@ namespace KABSUUITests
         }
         /// <summary>
         /// This is to test the "Sum OF Units" function.
-        /// We will look for "Mouse" with the "Owner" filter, and click on "Sum Of Units" the expected result is 31
+        /// We will look for "Mouse" with the "Owner" filter, and click on "Sum Of Units" the expected result is 31 (number may vary depedning on new entries)
         /// </summary>
         [TestMethod]
         public void CodedUITestMethod1()
@@ -34,7 +34,7 @@ namespace KABSUUITests
         }
         /// <summary>
         /// This is to test to the total Sum Of Units without any filters or test in the search box.
-        /// The expected result is 213886
+        /// The expected result is 213886 (number may vary depedning on new entries)
         /// </summary>
         [TestMethod]
         public void CodedUITestMethod2()

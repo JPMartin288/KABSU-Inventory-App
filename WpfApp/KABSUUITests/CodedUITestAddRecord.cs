@@ -21,12 +21,19 @@ namespace KABSUUITests
         public CodedUITestAddRecord()
         {
         }
-
+        /// <summary>
+        /// This is a test method to add a new record.
+        /// </summary>
         [TestMethod]
         public void CodedUITestMethod1()
         {
-            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
+
+            this.UIMap.AddingRecord();
+
+           
         }
+       
+
 
         #region Additional test attributes
 
